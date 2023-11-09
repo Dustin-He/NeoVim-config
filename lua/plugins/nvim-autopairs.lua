@@ -23,5 +23,4 @@ local nvimautopairs = {{
     }
 }}
 
-
 return nvimautopairs
