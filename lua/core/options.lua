@@ -46,13 +46,24 @@ opt.spelllang = "en_US"
 -- Language
 vim.api.nvim_exec('language en_US', true)
 
--- Code folding
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
-
-local augroup_folding = vim.api.nvim_create_augroup("code_folding_cmds", {clear = true})
-vim.api.nvim_create_autocmd({"VimEnter", "BufWinEnter", "BufRead", "FileReadPost"}, {
-  pattern = "*",
-  group = augroup_folding,
-  command = "normal zR"
+local augroup_large = vim.api.nvim_create_augroup("large_file_cmds", {clear = true})
+vim.api.nvim_create_autocmd({"BufEnter", "BufReadPre"}, {
+    pattern = "*",
+    group = augroup_large,
+    callback = function()
+        local largeFileSize = 1024 * 1024 * 1024
+        local fileSize = vim.fn.getfsize(vim.fn.expand("<afile>"))
+        if fileSize < largeFileSize then
+            -- Code folding
+            opt.foldmethod = "expr"
+            opt.foldexpr = "nvim_treesitter#foldexpr()"
+            local augroup_folding = vim.api.nvim_create_augroup("code_folding_cmds", {clear = true})
+            vim.api.nvim_create_autocmd({"VimEnter", "BufWinEnter", "BufRead", "FileReadPost"}, {
+              pattern = "*",
+              group = augroup_folding,
+              command = "normal zR"
+            })
+            -- require("lazy").setup("plugins")
+        end
+    end
 })

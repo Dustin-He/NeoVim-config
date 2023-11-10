@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local opt = vim.opt
 
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -14,7 +15,4 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
-
-local lspconfig = require('lspconfig')
-
 
