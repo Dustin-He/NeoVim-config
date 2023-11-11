@@ -12,8 +12,12 @@ opt.shiftwidth = 4
 opt.expandtab = true
 opt.autoindent = true
 
--- Disable wrap???
-opt.wrap = false
+-- Enable wrap
+opt.wrap = true
+opt.display:append("lastline")
+
+-- Cursor position
+opt.scrolloff = 5
 
 -- Cursor line
 opt.cursorline = true

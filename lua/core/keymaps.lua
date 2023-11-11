@@ -8,11 +8,10 @@ local keymap = vim.keymap
 keymap.set("i", "jk", "<ESC>")
 
 
-
 -- Visual Mode --
 -- Move multiple lines
-keymap.set("v", "J", ":m '>+1<CR>gv")
-keymap.set("v", "K", ":m '<-2<CR>gv")
+keymap.set("v", "<leader>j", ":m '>+1<CR>gv")
+keymap.set("v", "<leader>k", ":m '<-2<CR>gv")
 keymap.set("v", "<leader>.", ">gv")
 keymap.set("v", "<leader>,", "<gv")
 
@@ -25,6 +24,11 @@ keymap.set("n", "<C-h>", "<C-w>h")
 keymap.set("n", "<C-l>", "<C-w>l")
 keymap.set("n", "<C-j>", "<C-w>j")
 keymap.set("n", "<C-k>", "<C-w>k")
+-- Resize window
+keymap.set("n", "<S-Up>", ":resize +1<CR>")
+keymap.set("n", "<S-Down>", ":resize -1<CR>")
+keymap.set("n", "<S-Left>", ":vertical resize +1<CR>")
+keymap.set("n", "<S-Right>", ":vertical resize -1<CR>")
 -- Change buffer
 keymap.set("n", "<leader>n", ":bn<CR>")
 keymap.set("n", "<leader>p", ":bp<CR>")
