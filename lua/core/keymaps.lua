@@ -14,7 +14,14 @@ keymap.set("v", "<leader>j", ":m '>+1<CR>gv")
 keymap.set("v", "<leader>k", ":m '<-2<CR>gv")
 keymap.set("v", "<leader>.", ">gv")
 keymap.set("v", "<leader>,", "<gv")
-
+-- Multi-line jump
+keymap.set("v", "J", "10j")
+keymap.set("v", "K", "10k")
+keymap.set("v", "H", "10h")
+keymap.set("v", "L", "10l")
+keymap.set("v", "W", "5w")
+keymap.set("v", "B", "5b")
+keymap.set("v", "P", "5p")
 
 -- Normal Mode --
 -- Split window
@@ -37,6 +44,11 @@ keymap.set("n", "<leader>hl", ":nohl<CR>")
 -- Multi-line jump
 keymap.set("n", "J", "10j")
 keymap.set("n", "K", "10k")
+keymap.set("n", "H", "10h")
+keymap.set("n", "L", "10l")
+keymap.set("n", "W", "5w")
+keymap.set("n", "B", "5b")
+keymap.set("n", "P", "5p")
 -- Nvim-tree
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 -- Bufferline

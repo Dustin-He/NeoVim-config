@@ -16,9 +16,9 @@ local colorscheme = {{
     config = function()
         require('onedark').setup {
             style = 'darker',
-            transparent = true,
+            transparent = false,
             lualine = {
-                transparent = true,
+                transparent = false,
             }
         }
         require('onedark').load()
