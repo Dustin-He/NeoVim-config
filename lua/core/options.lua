@@ -51,10 +51,10 @@ opt.showmode = false
 
 -- Spell Check
 opt.spell = true
-opt.spelllang = "en_US"
+opt.spelllang:append("en_US")
 
 -- Language
-vim.api.nvim_exec('language en_US.UTF-8', true)
+vim.api.nvim_exec('language time en_US.UTF-8', true)
 
 local augroup_large = vim.api.nvim_create_augroup("large_file_cmds", {clear = true})
 vim.api.nvim_create_autocmd({"BufEnter", "BufReadPre"}, {

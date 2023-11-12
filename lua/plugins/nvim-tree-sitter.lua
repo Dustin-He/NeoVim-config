@@ -12,6 +12,7 @@ local nvimtreesitter = {{
                 enable = true,
                 additional_vim_regex_highlighting = false,
                 disable = {
+                    "latex",
                 }
             },
             indent = { enable = true },
