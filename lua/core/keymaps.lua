@@ -53,3 +53,9 @@ keymap.set("n", "P", "5p")
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 -- Bufferline
 keymap.set("n", "<leader><tab>", ":BufDel<CR>")
+-- ToggleTerm
+keymap.set("n", "<leader>t", ":ToggleTerm direction=float<CR>")
+
+
+
+
