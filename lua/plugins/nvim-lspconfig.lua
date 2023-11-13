@@ -14,7 +14,7 @@ local nvim_lspconfig = { {
             cmd = {
                 "clangd",
                 "--header-insertion=never",
-                "--query-driver=/opt/homebrew/opt/llvm/bin/clang",
+                "--query-driver=/usr/bin/clang++",
                 "--all-scopes-completion",
                 "--completion-style=detailed",
             }
