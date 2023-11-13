@@ -54,7 +54,7 @@ opt.showcmdloc = 'statusline'
 
 -- Spell Check
 opt.spell = true
-opt.spelllang:append("en_US")
+-- opt.spelllang:append("en_US")
 
 -- Language
 vim.api.nvim_exec('language time en_US.UTF-8', true)
