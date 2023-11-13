@@ -22,10 +22,11 @@ opt.scrolloff = 5
 -- Cursor line
 opt.cursorline = true
 local augroup_color = vim.api.nvim_create_augroup("color_cmds", {clear = true})
-vim.api.nvim_create_autocmd('ColorScheme', {
+vim.api.nvim_create_autocmd('BufEnter', {
     pattern = "*",
     group = augroup_color,
-    command = [[highlight CursorLine guibg=NONE gui=underline,bold]]
+    command = [[highlight CursorLine guibg=NONE gui=bold,underline]],
+    nested = true,
 })
 
 -- Enable the mouse

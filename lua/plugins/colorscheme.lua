@@ -1,5 +1,5 @@
 -- -- the colorscheme should be available when starting Neovim
--- local colorscheme = {{
+-- local myColorScheme = {{
 --     "folke/tokyonight.nvim",
 --     -- version = "*",
 --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
@@ -10,19 +10,19 @@
 --     end,
 -- }}
 
-local colorscheme = {{
+local myColorScheme = {{
     "navarasu/onedark.nvim",
     lazy = false,
     config = function()
         require('onedark').setup {
             style = 'darker',
-            transparent = false,
+            transparent = true,
             lualine = {
-                transparent = false,
+                transparent = true,
             }
         }
         require('onedark').load()
     end
 }}
 
-return colorscheme
+return myColorScheme
