@@ -11,14 +11,21 @@ local nvim_lspconfig = { {
         require("lspconfig").pylsp.setup {}
 
         require("lspconfig").clangd.setup {
-            cmd = {
-                "clangd",
+        }
+        local lspconfig = require 'lspconfig'
+        lspconfig.util.on_setup = lspconfig.util.add_hook_before(lspconfig.util.on_setup, function(config)
+          if config.name == "clangd" then
+            local custom_server_prefix = "/Users/hejintao/.local/share/nvim/mason"
+            -- local custom_server_prefix = "/usr"
+            config.cmd = { custom_server_prefix .. "/bin/clangd",
                 "--header-insertion=never",
-                "--query-driver=/usr/bin/clang++",
+                "--query-driver=/usr/bin/clang",
                 "--all-scopes-completion",
                 "--completion-style=detailed",
+                -- "--log=verbose",
             }
-        }
+          end
+        end)
         -- Global mappings.
         -- See `:help vim.diagnostic.*` for documentation on any of the below functions
         vim.keymap.set('n', '<space>w', vim.diagnostic.open_float)
