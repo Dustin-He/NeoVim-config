@@ -22,7 +22,12 @@ local nvim_lspconfig = { {
                 "--query-driver=/usr/bin/clang",
                 "--all-scopes-completion",
                 "--completion-style=detailed",
-                -- "--log=verbose",
+                "--log=verbose",
+            }
+            config.init_options = {
+                fallbackFlags = {
+                    "-std=c++20",
+                }
             }
           end
         end)
