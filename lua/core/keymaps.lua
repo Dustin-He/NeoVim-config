@@ -48,7 +48,6 @@ keymap.set("n", "H", "10h")
 keymap.set("n", "L", "10l")
 keymap.set("n", "W", "5w")
 keymap.set("n", "B", "5b")
-keymap.set("n", "P", "5p")
 -- Nvim-tree
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 -- Bufferline
