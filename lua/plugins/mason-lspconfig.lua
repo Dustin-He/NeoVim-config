@@ -6,8 +6,8 @@ local mason_lspconfig = {{
         ensure_installed = {
             "clangd",
             "cmake",
-            "golangci_lint_ls",
-            "ltex",
+            -- "golangci_lint_ls",
+            "texlab",
             "html",
             "jsonls",
             "tsserver",

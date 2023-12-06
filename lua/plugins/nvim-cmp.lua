@@ -92,20 +92,16 @@ local nvim_cmp = {
                 })
             })
 
-            cmp.setup.filetype("tex", {
-              sources = {
-                { name = 'vimtex' },
-                { name = 'buffer' },
-                -- other sources
-              },
-            })
             -- load vscode snippet (friendly-snippet)
             require("luasnip.loaders.from_vscode").lazy_load()
 
             -- Set up lspconfig.
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
             -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-            require('lspconfig')['ltex'].setup {
+            -- require('lspconfig')['ltex'].setup {
+            --     capabilities = capabilities
+            -- }
+            require('lspconfig')['texlab'].setup {
                 capabilities = capabilities
             }
             require('lspconfig')['clangd'].setup {
@@ -131,23 +127,20 @@ local nvim_cmp = {
     
     {
         "L3MON4D3/LuaSnip",
-        build = "make install_jsregexp"
+        build = "make install_jsregexp",
+        dependencies = {'rafamadriz/friendly-snippets',}
     },
     
     {
         'saadparwaiz1/cmp_luasnip'
     },
 
-    {
-        'rafamadriz/friendly-snippets'
-    },
+    -- {
+    --     'rafamadriz/friendly-snippets'
+    -- },
 
     {
         'onsails/lspkind-nvim'
-    },
-
-    {
-        "micangl/cmp-vimtex"
     },
 }
 

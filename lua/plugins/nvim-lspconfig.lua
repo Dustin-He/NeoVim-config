@@ -3,9 +3,9 @@ local nvim_lspconfig = { {
     lazy = false,
     config = function()
         require("lspconfig").lua_ls.setup {}
-        require("lspconfig").ltex.setup {}
+        require("lspconfig").texlab.setup {}
         require("lspconfig").marksman.setup {}
-        require("lspconfig").golangci_lint_ls.setup {}
+        -- require("lspconfig").golangci_lint_ls.setup {}
         require("lspconfig").lemminx.setup {}
         require("lspconfig").rust_analyzer.setup {}
         require("lspconfig").pylsp.setup {}
@@ -21,6 +21,7 @@ local nvim_lspconfig = { {
             config.cmd = { custom_server_prefix .. "/bin/clangd",
                 "--header-insertion=never",
                 "--query-driver=/opt/homebrew/opt/llvm/bin/clang",
+                -- "--query-driver=/usr/bin/clang",
                 "--all-scopes-completion",
                 "--completion-style=detailed",
                 -- "--log=verbose",
