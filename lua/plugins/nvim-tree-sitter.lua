@@ -5,7 +5,7 @@ local nvimtreesitter = {{
     lazy = false,
     config = function ()
       require("nvim-treesitter.configs").setup({
-            ensure_installed = { "json", "yaml", "java", "latex", "c", "go", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "bash", "cpp", "python", "csv", "tsv", "xml", "make", "markdown"},
+            ensure_installed = { "regex", "markdown_inline", "json", "yaml", "java", "latex", "c", "go", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "bash", "cpp", "python", "csv", "tsv", "xml", "make", "markdown"},
             auto_install = true,
             sync_install = false,
             highlight = {
