@@ -4,6 +4,7 @@ local comment = {{
     version = "*",
     opts = {
     }
-}}
+} }
+
 
 return comment
