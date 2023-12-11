@@ -1,4 +1,4 @@
-local comment = {{
+local comment = { {
     "numToStr/Comment.nvim",
     lazy = false,
     version = "*",
