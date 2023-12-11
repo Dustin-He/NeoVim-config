@@ -12,7 +12,33 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 
-vim.opt.rtp:prepend(lazypath)
+opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins")
+local status_ok, lazy = pcall(require, "lazy")
+if not status_ok then
+    vim.notify("Lazy.nvim is not ready")
+    return
+end
+
+lazy.setup({
+    ui = {
+        border="rounded",
+        icons = {
+            cmd = "⌘",
+            config = "🛠",
+            event = "📅",
+            ft = "📂",
+            init = "⚙",
+            keys = "🗝",
+            plugin = "🔌",
+            runtime = "💻",
+            require = "🌙",
+            source = "📄",
+            start = "🚀",
+            task = "📌",
+            lazy = "💤 ",
+        },
+    },
+    spec = {import = "plugins"},
+})
 

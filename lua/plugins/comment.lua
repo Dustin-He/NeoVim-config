@@ -6,5 +6,4 @@ local comment = {{
     }
 }}
 
-
 return comment
