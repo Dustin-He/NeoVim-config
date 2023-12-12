@@ -1,7 +1,8 @@
-local colorscheme = "onedark"
+local scheme = "onedark"
 
-local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-if not status_ok then
-    vim.notify("Color scheme " .. colorscheme .. "not found\n") -- doesn't work
-    return
-end
+vim.cmd[["colorscheme " .. scheme]]
+-- local status_ok, _ = pcall(vim.cmd, "colorscheme " .. scheme)
+-- if not status_ok then
+--     vim.notify("Color scheme " .. scheme .. "not found\n")
+--     return
+-- end

@@ -14,7 +14,7 @@ local myColorScheme = {
     {
         "navarasu/onedark.nvim",
         lazy = false,
-        priority = 1000,
+        priority = 999,
         config = function()
             require('onedark').setup {
                 style = 'darker',

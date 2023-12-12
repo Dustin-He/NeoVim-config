@@ -7,10 +7,16 @@ local nvimtree = { {
         -- lazy = true
     },
     opts = {
+        hijack_netrw = true,
         disable_netrw = true,
         hijack_unnamed_buffer_when_opening = false,
         hijack_cursor = true,
-        -- auto_close = true,
+        sync_root_with_cwd = true,
+        update_focused_file = {
+            enable = true,
+            update_cwd = false,
+            ignore_list = {},
+        },
         -- filters = { custom = { "^.git$" } },
         diagnostics = {
             enable = true,
@@ -82,6 +88,20 @@ local nvimtree = { {
                 },
             },
         },
+        on_attach = function(bufnr)
+            local api = require('nvim-tree.api')
+
+            local function myopts(desc)
+                return { desc = desc, buffer = bufnr, noremap = true, silent = true, nowait = false }
+            end
+
+            api.config.mappings.default_on_attach(bufnr)
+
+            -- -- add your mappings
+            vim.keymap.set('n', 'v', api.node.open.vertical, myopts('Vertical split open'))
+            vim.keymap.set('n', 'h', api.node.open.horizontal, myopts('Horizontal split open'))
+            -- ---
+        end,
     }
 } }
 
