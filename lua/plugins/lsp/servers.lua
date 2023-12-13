@@ -5,17 +5,17 @@ M.server_names = {
     "cmake",
     -- "golangci_lint_ls",
     "texlab",
-    "html",
-    "jsonls",
-    "tsserver",
+    -- "html",
+    -- "jsonls",
+    -- "tsserver",
     "lua_ls",
     "marksman",
-    "pylsp",
+    -- "pylsp",
     "rust_analyzer",
     "lemminx",
-    "yamlls",
+    -- "yamlls",
     "jdtls",
-    "jsonls"
+    -- "jsonls"
 }
 
 return M

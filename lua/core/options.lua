@@ -74,7 +74,7 @@ opt.signcolumn = "yes"
 -- Bufferline
 opt.showmode = false
 opt.showcmd = true
-opt.showcmdloc = 'statusline'
+opt.showcmdloc = 'last'
 
 -- Spell Check
 opt.spell = true

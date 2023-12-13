@@ -9,7 +9,8 @@ local mason_lspconfig = {{
     version = "*",
     lazy = false,
     opts = {
-        ensure_installed = servers.server_names
+        ensure_installed = servers.server_names,
+        automatic_installation = true,
     }
 }}
 
