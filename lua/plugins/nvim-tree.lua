@@ -97,7 +97,11 @@ local nvimtree = { {
 
             api.config.mappings.default_on_attach(bufnr)
 
-            -- -- add your mappings
+            -- Delete mappings
+            vim.keymap.del('n', 'J', { buffer = bufnr })
+            vim.keymap.del('n', 'K', { buffer = bufnr })
+
+            -- -- Add your mappings
             vim.keymap.set('n', 'v', api.node.open.vertical, myopts('Vertical split open'))
             vim.keymap.set('n', 'h', api.node.open.horizontal, myopts('Horizontal split open'))
             -- ---
