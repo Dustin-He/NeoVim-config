@@ -59,7 +59,7 @@ keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 keymap("n", "<leader><tab>", ":BufDel<CR>", opts)
 -- ToggleTerm
 keymap("n", "<leader>t", ":ToggleTerm direction=float<CR>", opts)
-
-
+-- LazyGit
+keymap("n", "<leader>g", ":LazyGit<CR>", opts)
 
 
