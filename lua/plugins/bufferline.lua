@@ -3,10 +3,22 @@ local bufferline = { {
     lazy = false,
     -- version = "*",
     -- ft = "alpha",
+    event = "VeryLazy",
+    init = function()
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "LazyDone",
+            callback = function()
+                vim.cmd [[
+                        highlight BufferLineFill guibg=#1F2329  " Theme specific
+                ]]
+            end,
+        })
+    end,
     opts = {
         options = {
             mode = 'buffers',
             diagnostics = "nvim_lsp",
+            themable = true,
             -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
             --     local icon = level:match("error") and " " or " "
             --     return " " .. icon .. count
