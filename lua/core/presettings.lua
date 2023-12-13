@@ -1,8 +1,8 @@
 local opt = vim.opt
 
 -- Open files larger than 1 GB
-local augroup_large = vim.api.nvim_create_augroup("large_file_cmds", {clear = true})
-vim.api.nvim_create_autocmd({"BufEnter", "BufReadPre"}, {
+local augroup_large = vim.api.nvim_create_augroup("large_file_cmds", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPre" }, {
     pattern = "*",
     group = augroup_large,
     callback = function()
@@ -12,11 +12,11 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufReadPre"}, {
             -- Code folding
             opt.foldmethod = "expr"
             opt.foldexpr = "nvim_treesitter#foldexpr()"
-            local augroup_folding = vim.api.nvim_create_augroup("code_folding_cmds", {clear = true})
-            vim.api.nvim_create_autocmd({"VimEnter", "BufWinEnter", "BufRead", "FileReadPost"}, {
-              pattern = "*",
-              group = augroup_folding,
-              command = "normal zR"
+            local augroup_folding = vim.api.nvim_create_augroup("code_folding_cmds", { clear = true })
+            vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "BufRead", "FileReadPost" }, {
+                pattern = "*",
+                group = augroup_folding,
+                command = "normal zR"
             })
             -- Plugins loading
             require("core.lazy")
@@ -28,4 +28,4 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufReadPre"}, {
 require("core.colorscheme")
 
 -- Restore cursor
-vim.cmd[[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
+vim.cmd [[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
