@@ -46,11 +46,11 @@ local bufferline = { {
             },
             indicator = {
                 -- icon = '▎', -- this should be omitted if indicator style is not 'icon'
-                -- style = 'underline',
-                style = 'icon',
+                style = 'underline',
+                -- style = 'icon',
             },
             numbers = "both",
-            separator_style = "slant",
+            separator_style = "thick",
             -- show_tab_indicators = true,
             show_buffer_icons = true,
             show_buffer_close_icons = true,
