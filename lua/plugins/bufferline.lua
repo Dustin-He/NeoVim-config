@@ -46,8 +46,8 @@ local bufferline = { {
             },
             indicator = {
                 -- icon = '▎', -- this should be omitted if indicator style is not 'icon'
-                style = 'underline',
-                -- style = 'icon',
+                -- style = 'underline',
+                style = 'icon',
             },
             numbers = "both",
             separator_style = "thick",
