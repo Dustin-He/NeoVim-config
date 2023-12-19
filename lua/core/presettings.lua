@@ -20,10 +20,25 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPre" }, {
             })
             -- Plugins loading
             require("core.lazy")
+            -- Nvim-tree
+            local function open_nvim_tree(data)
+                -- buffer is a directory
+                local directory = vim.fn.isdirectory(data.file) == 1
+
+                if not directory then
+                    return
+                end
+
+                -- change to the directory
+                vim.cmd.cd(data.file)
+
+                -- open the tree
+                require("nvim-tree.api").tree.open()
+            end
+            vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
         end
     end
 })
 
 -- Restore cursor
 vim.cmd [[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
-
