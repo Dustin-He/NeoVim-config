@@ -23,7 +23,7 @@ M.set_keymaps = function()
             -- See `:help vim.lsp.*` for documentation on any of the below functions
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {buffer = ev.buf, desc = "Go to Declaration"})
             vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {buffer = ev.buf, desc = "Go to defenition"})
-            vim.keymap.set('n', 'gk', vim.lsp.buf.hover, {buffer = ev.buf, desc = "Hover enable"})
+            vim.keymap.set('n', 'gh', vim.lsp.buf.hover, {buffer = ev.buf, desc = "Hover enable"})
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, {buffer = ev.buf, desc = "Implementation"})
             -- vim.keymap.set("n", "gl", '<cmd>lua vim.diagnostic.open_float()<CR>', {buffer = ev.buf, desc = "Open float"})
             vim.keymap.set('n', 'gr', vim.lsp.buf.references, {buffer = ev.buf, desc = "Go to references"})
