@@ -62,4 +62,29 @@ keymap("n", "<leader><tab>", ":BufDel<CR>", opts)
 -- LazyGit
 keymap("n", "<leader>g", ":LazyGit<CR>", opts)
 
+-- Open URL
+local function open_external(file)
+    local sysname = vim.loop.os_uname().sysname:lower()
+    local jobcmd
+    if sysname:match("windows") then
+        -- Not sure if this is correct. I just copied it from the other answers.
+        jobcmd = ("start %s"):format(file)
+    else
+        jobcmd = { "open", "-u", file }
+    end
+    local job = vim.fn.jobstart(jobcmd, {
+        -- Don't kill the started process when nvim exits.
+        detach = true,
+        -- Make relative paths relative to the current file.
+        cwd = vim.fn.expand("%:p:h"),
+    })
+    -- Kill the job after 5 seconds.
+    local delay = 5000
+    vim.defer_fn(function()
+        vim.fn.jobstop(job)
+    end, delay)
+end
+vim.keymap.set("n", "gx", function()
+    open_external(vim.fn.expand("<cfile>"))
+end)
 
