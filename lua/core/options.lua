@@ -96,4 +96,5 @@ vim.cmd [[set iskeyword+=-]]
 -- Language
 vim.api.nvim_exec('language time en_US.UTF-8', true)
 
+vim.g.python3_host_prog = "/usr/bin/python3"
 
