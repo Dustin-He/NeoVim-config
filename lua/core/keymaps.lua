@@ -47,8 +47,10 @@ keymap("n", "<leader>p", ":bp<CR>", opts)
 -- Cancel search highlight
 keymap("n", "<leader>hl", ":nohl<CR>", opts)
 -- Multi-line jump
-keymap("n", "J", "10j", opts)
-keymap("n", "K", "10k", opts)
+vim.cmd[[nnoremap <silent><expr> j (v:count > 0 ? "m'" . v:count : "") . 'j']]
+vim.cmd[[nnoremap <silent><expr> k (v:count > 0 ? "m'" . v:count : "") . 'k']]
+keymap("n", "J", "10j", {noremap=false, silent=true})
+keymap("n", "K", "10k", {noremap=false, silent=true})
 keymap("n", "H", "10h", opts)
 keymap("n", "L", "10l", opts)
 keymap("n", "W", "5w", opts)
@@ -87,4 +89,3 @@ end
 vim.keymap.set("n", "gx", function()
     open_external(vim.fn.expand("<cfile>"))
 end)
-
