@@ -12,7 +12,7 @@ opt.fileencoding = "UTF-8"
 -- Something about cmp pop up menu and the cmd
 opt.cmdheight = 2
 opt.pumheight = 10
-opt.completeopt = {"menuone", "noselect"}
+opt.completeopt = { "menuone", "noselect" }
 
 -- Show
 opt.conceallevel = 0
@@ -45,7 +45,7 @@ opt.sidescrolloff = 5
 
 -- Cursor line
 opt.cursorline = true
-local augroup_color = vim.api.nvim_create_augroup("color_cmds", {clear = true})
+local augroup_color = vim.api.nvim_create_augroup("color_cmds", { clear = true })
 vim.api.nvim_create_autocmd('BufEnter', {
     pattern = "*",
     group = augroup_color,

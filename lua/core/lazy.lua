@@ -43,9 +43,9 @@ lazy.setup({
         cache = {
             enabled = true,
         },
-        reset_packpath = true,                                          -- reset the package path to improve startup time
+        reset_packpath = true,                                                  -- reset the package path to improve startup time
         rtp = {
-            reset = false,                                               -- reset the runtime path to $VIMRUNTIME and your config directory
+            reset = false,                                                      -- reset the runtime path to $VIMRUNTIME and your config directory
             paths = { '/opt/homebrew/Cellar/neovim/0.9.4/share/nvim/runtime' }, -- add any custom paths here that you want to includes in the rtp
             disabled_plugins = {
                 -- "gzip",

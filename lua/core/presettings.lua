@@ -40,22 +40,14 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPre" }, {
     end
 })
 
-local augroup_comment = vim.api.nvim_create_augroup("comment_highlight_cmds", {clear = true})
-vim.api.nvim_create_autocmd({ "BufNew", "VimEnter", "BufWinEnter", "BufRead", "FileReadPost" },{
+local augroup_comment = vim.api.nvim_create_augroup("comment_highlight_cmds", { clear = true })
+vim.api.nvim_create_autocmd({ "BufNew", "VimEnter", "BufWinEnter", "BufRead", "FileReadPost" }, {
     pattern = "*.tex",
     group = augroup_comment,
     command = "highlight Normal guifg=#DCC4F2"
     --     command = "highlight Comment guifg=#0F0F0F"
-    -- command = "highlight Normal guifg=#C7EBC7"
 })
 
 -- Restore cursor
 vim.cmd [[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
 
-
--- local function myprint(opts)
---     print(opts.line1)
---     print(opts.line2)
--- end
---
--- vim.api.nvim_create_user_command("Myprint", myprint, {range=true})
