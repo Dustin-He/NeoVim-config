@@ -122,14 +122,17 @@ local function getRefTitle(def_list)
     for _, item in ipairs(def_list['items']) do
         local p = "%.bib$"
         if string.match(item.filename, p) then
-            vim.cmd("e " .. item.filename)
-            vim.api.nvim_win_set_cursor(0, { item.lnum, item.col })
-            local node = vim.treesitter.get_node():next_named_sibling()
+            -- vim.cmd("e " .. item.filename)
+            local buf = vim.fn.bufadd(item.filename)
+            vim.fn.bufload(buf)
+            -- vim.api.nvim_win_set_cursor(0, { item.lnum, item.col })
+            -- vim.treesitter.get_parser(buf):parse()
+            local node = vim.treesitter.get_node({ bufnr=buf, pos={item.lnum-1, item.col-1} }):next_named_sibling()
             while node ~= nil do
-                local text = vim.treesitter.get_node_text(node, 0)
+                local text = vim.treesitter.get_node_text(node, buf)
                 p = "^title={"
                 if string.match(text, p) then
-                    title = vim.treesitter.get_node_text(node:named_child(1), 0)
+                    title = vim.treesitter.get_node_text(node:named_child(1), buf)
                     break
                 else
                     node = node:next_named_sibling()
@@ -141,7 +144,7 @@ local function getRefTitle(def_list)
             end
         end
     end
-    vim.cmd("buffer #")
+    -- vim.cmd("buffer #")
     return title
 end
 
@@ -162,7 +165,7 @@ end
 
 -- Autocmd for searching citations with Google Scholar
 local augroup_search_ref = vim.api.nvim_create_augroup("search_ref_cmds", { clear = true })
-vim.api.nvim_create_autocmd({"BufEnter"}, {
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
     pattern = "*.tex",
     group = augroup_search_ref,
     callback = function()
