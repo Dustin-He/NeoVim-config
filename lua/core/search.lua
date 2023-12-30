@@ -22,7 +22,7 @@ local function baiduSearch(opts)
 end
 
 -- Translate with Google Translate
--- @ [tl=zh|en] Target language
+-- [tl=zh|en] Target language
 local function googleTranslate(opts)
     local suffix = ""
     local prefix = ""
@@ -115,6 +115,61 @@ local function translateComplete(_, CmdLine, _)
     end
     return {}
 end
+
+-- Get the cite bib name
+local function getRefTitle(def_list)
+    local title = ""
+    for _, item in ipairs(def_list['items']) do
+        local p = "%.bib$"
+        if string.match(item.filename, p) then
+            vim.cmd("e " .. item.filename)
+            vim.api.nvim_win_set_cursor(0, { item.lnum, item.col })
+            local node = vim.treesitter.get_node():next_named_sibling()
+            while node ~= nil do
+                local text = vim.treesitter.get_node_text(node, 0)
+                p = "^title={"
+                if string.match(text, p) then
+                    title = vim.treesitter.get_node_text(node:named_child(1), 0)
+                    break
+                else
+                    node = node:next_named_sibling()
+                end
+            end
+            if title ~= "" then
+                title = string.gsub(title, "[%^{%^}]", "")
+                break
+            end
+        end
+    end
+    vim.cmd("buffer #")
+    return title
+end
+
+-- Search the citations
+local function searchRefScholar()
+    vim.lsp.buf.definition({
+        reuse_win = false,
+        on_list = function(def_list)
+            local title = getRefTitle(def_list)
+            local opts = { fargs = {}, args = title }
+            for i in string.gmatch(title, "%S+") do
+                table.insert(opts.fargs, i)
+            end
+            googleScholar(opts)
+        end
+    })
+end
+
+-- Autocmd for searching citations with Google Scholar
+local augroup_search_ref = vim.api.nvim_create_augroup("search_ref_cmds", { clear = true })
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+    pattern = "*.tex",
+    group = augroup_search_ref,
+    callback = function()
+        vim.keymap.set("n", "gsr", searchRefScholar,
+            { silent = true, noremap = true, buffer = true, desc = "Search the citation" })
+    end
+})
 
 -- Create User Command
 vim.api.nvim_create_user_command("Baidu", baiduSearch, { range = true, nargs = "*" })

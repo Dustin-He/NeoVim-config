@@ -41,7 +41,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPre" }, {
 })
 
 local augroup_comment = vim.api.nvim_create_augroup("comment_highlight_cmds", { clear = true })
-vim.api.nvim_create_autocmd({ "BufNew", "VimEnter", "BufWinEnter", "BufRead", "FileReadPost" }, {
+vim.api.nvim_create_autocmd({"BufNew", "VimEnter", "BufWinEnter", "BufRead", "FileReadPost" }, {
     pattern = "*.tex",
     group = augroup_comment,
     command = "highlight Normal guifg=#DCC4F2"
