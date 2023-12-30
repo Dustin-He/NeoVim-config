@@ -12,6 +12,9 @@ return {
                     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                 },
             },
+            completion = {
+                callSnippet = "Replace"
+            }
         },
     },
 }
