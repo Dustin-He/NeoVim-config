@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
 opt.mouse:append("a")
 
 -- System clip board
-opt.clipboard:append("unnamedplus")
+-- opt.clipboard:append("unnamedplus")
 
 -- New a split window on the right/below of the window
 opt.splitright = true
