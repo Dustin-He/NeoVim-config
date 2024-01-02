@@ -79,7 +79,8 @@ opt.showcmdloc = 'statusline'
 
 -- Spell Check
 opt.spell = true
--- opt.spelllang:append("en_US")
+opt.spellfile:append("/Users/dustin/.local/share/nvim/lazy/lazy.nvim/spell/en.utf-8.add")
+opt.spelllang = {"en"}
 
 -- Hide the annoying complete messages
 opt.shortmess:append "c"

@@ -2,9 +2,10 @@ local opt = vim.opt
 
 -- Open files larger than 1 GB
 local augroup_large = vim.api.nvim_create_augroup("large_file_cmds", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPre" }, {
+vim.api.nvim_create_autocmd({"BufAdd", "BufEnter", "BufReadPre" }, {
     pattern = "*",
     group = augroup_large,
+    once = true, -- curious?
     callback = function()
         local largeFileSize = 1024 * 1024 * 1024
         local fileSize = vim.fn.getfsize(vim.fn.expand("<afile>"))
@@ -13,11 +14,16 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPre" }, {
             opt.foldmethod = "expr"
             opt.foldexpr = "nvim_treesitter#foldexpr()"
             local augroup_folding = vim.api.nvim_create_augroup("code_folding_cmds", { clear = true })
-            vim.api.nvim_create_autocmd({ "BufAdd", "VimEnter", "BufWinEnter", "BufRead", "FileReadPost" }, {
-                pattern = "*",
-                group = augroup_folding,
-                command = "normal zR"
-            })
+            vim.api.nvim_create_autocmd(
+                { "TextYankPost", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT", "BufWinEnter",
+                    "VimEnter",
+                    "BufAdd", "BufRead", "FileReadPost" },
+                {
+                    pattern = "*",
+                    group = augroup_folding,
+                    command = "normal zR",
+                    nested = true
+                })
             -- Plugins loading
             require("core.lazy")
             -- Nvim-tree
