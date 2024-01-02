@@ -42,6 +42,14 @@ vim.api.nvim_create_autocmd({"BufAdd", "BufEnter", "BufReadPre" }, {
                 require("nvim-tree.api").tree.open()
             end
             vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+        else
+            vim.cmd[[filetype off]]
+            vim.cmd[[syntax off]]
+            opt.wrap = false
+            opt.ttyfast = true
+            opt.hlsearch = false
+            opt.autoindent = false
+            opt.smartindent = false
         end
     end
 })
