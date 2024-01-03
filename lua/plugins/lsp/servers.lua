@@ -3,7 +3,7 @@ M = {}
 M.server_names = {
     "clangd",
     "cmake",
-    -- "golangci_lint_ls",
+    "gopls",
     "texlab",
     "html",
     "jsonls",
