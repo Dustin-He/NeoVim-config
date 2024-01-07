@@ -5,9 +5,31 @@ local function replaceString(s)
     return replacedString
 end
 
+-- Replace string with registers
+local function replaceStringReg(searchString)
+    local regContent = ""
+    local regOrNot = false
+    local tmpString = searchString
+    for str in string.gmatch(searchString, "\\*\\=@%S") do
+        if string.match(str, "\\+\\=@%S") ~= nil then
+        else
+            local reg = string.gsub(str, "\\=@", "")
+            regContent = vim.fn.getreg(reg)
+            tmpString = string.gsub(tmpString, "\\=@%S", regContent, 1)
+            regOrNot = true
+        end
+    end
+    return { b = regOrNot, c = tmpString }
+end
+
 -- Search with google
 local function googleSearch(opts)
-    local searchString = replaceString(opts.args)
+    local searchString = opts.args
+    local reg = replaceStringReg(searchString)
+    if reg.b then
+        searchString = reg.c
+    end
+    searchString = replaceString(searchString)
     local url = "https://www.google.com/search?q=" .. searchString
     local jobcmd = { "open", "-u", url }
     vim.fn.jobstart(jobcmd)
@@ -15,7 +37,12 @@ end
 
 -- Search with Baidu
 local function baiduSearch(opts)
-    local searchString = replaceString(opts.args)
+    local searchString = opts.args
+    local reg = replaceStringReg(searchString)
+    if reg.b then
+        searchString = reg.c
+    end
+    searchString = replaceString(searchString)
     local url = "https://www.baidu.com/s?ie=utf-8&wd=" .. searchString
     local jobcmd = { "open", "-u", url }
     vim.fn.jobstart(jobcmd)
@@ -37,6 +64,11 @@ local function googleTranslate(opts)
         searchString = opts.fargs[1] .. " " .. searchString
         suffix = "&tl=zh-CN&op=translate"
         prefix = "?sl=auto&text="
+    end
+    searchString = opts.args
+    local reg = replaceStringReg(searchString)
+    if reg.b then
+        searchString = reg.c
     end
     searchString = replaceString(searchString)
     local url = "https://translate.google.com/" .. prefix .. searchString .. suffix
@@ -127,7 +159,8 @@ local function getRefTitle(def_list)
             vim.fn.bufload(buf)
             -- vim.api.nvim_win_set_cursor(0, { item.lnum, item.col })
             -- vim.treesitter.get_parser(buf):parse()
-            local node = vim.treesitter.get_node({ bufnr=buf, pos={item.lnum-1, item.col-1} }):next_named_sibling()
+            local node = vim.treesitter.get_node({ bufnr = buf, pos = { item.lnum - 1, item.col - 1 } })
+                :next_named_sibling()
             while node ~= nil do
                 local text = vim.treesitter.get_node_text(node, buf)
                 p = "^title={"
