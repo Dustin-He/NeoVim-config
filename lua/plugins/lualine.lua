@@ -37,6 +37,14 @@ local fileformat = {
     },
 }
 
+local macro = function ()
+    local macroReg = vim.fn.reg_recording()
+    if macroReg == "" then
+        return ""
+    end
+    return "@" .. macroReg
+end
+
 local lualine = { {
     "nvim-lualine/lualine.nvim",
     version = "*",
@@ -56,7 +64,7 @@ local lualine = { {
             lualine_a = { 'mode' },
             lualine_b = { 'branch', diff, 'diagnostics' },
             lualine_c = { "os.date('%c')" },
-            lualine_x = { '%S', 'selectioncount', 'encoding', fileformat, 'filetype' },
+            lualine_x = { macro, '%S', 'selectioncount', 'encoding', fileformat, 'filetype' },
             lualine_y = { progress },
             lualine_z = { 'location' }
         },
