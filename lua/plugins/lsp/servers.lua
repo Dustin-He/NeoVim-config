@@ -15,7 +15,8 @@ M.server_names = {
     "lemminx",
     "yamlls",
     "jdtls",
-    "jsonls"
+    "jsonls",
+    "vimls",
 }
 
 return M
