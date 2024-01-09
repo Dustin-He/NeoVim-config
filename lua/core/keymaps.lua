@@ -47,10 +47,10 @@ keymap("n", "<leader>p", ":bp<CR>", opts)
 -- Cancel search highlight
 keymap("n", "<leader>hl", ":nohl<CR>", opts)
 -- Multi-line jump
-vim.cmd[[nnoremap <silent><expr> j (v:count > 0 ? "m'" . v:count : "") . 'j']]
-vim.cmd[[nnoremap <silent><expr> k (v:count > 0 ? "m'" . v:count : "") . 'k']]
-keymap("n", "J", "10j", {noremap=false, silent=true})
-keymap("n", "K", "10k", {noremap=false, silent=true})
+vim.cmd [[nnoremap <silent><expr> j (v:count > 0 ? "m'" . v:count : "") . 'j']]
+vim.cmd [[nnoremap <silent><expr> k (v:count > 0 ? "m'" . v:count : "") . 'k']]
+keymap("n", "J", "10j", { noremap = false, silent = true })
+keymap("n", "K", "10k", { noremap = false, silent = true })
 keymap("n", "H", "10h", opts)
 keymap("n", "L", "10l", opts)
 keymap("n", "W", "5w", opts)
@@ -89,3 +89,42 @@ end
 vim.keymap.set("n", "gx", function()
     open_external(vim.fn.expand("<cfile>"))
 end)
+
+-- Surround keymaps
+keymap("x", "<leader>sb", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
+keymap("x", "<leader>sB", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
+keymap("x", "<leader>s(", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
+keymap("x", "<leader>s)", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
+keymap("x", "<leader>s{", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
+keymap("x", "<leader>s}", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
+keymap("x", "<leader>s[", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
+keymap("x", "<leader>s]", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
+keymap("x", "<leader>s<", "<ESC>`>a><ESC>`<i<<ESC>", opts)
+keymap("x", "<leader>s>", "<ESC>`>a><ESC>`<i<<ESC>", opts)
+keymap("x", "<leader>s\"", "<ESC>`>a\"<ESC>`<i\"<ESC>", opts)
+keymap("x", "<leader>s\"", "<ESC>`>a\"<ESC>`<i\"<ESC>", opts)
+keymap("x", "<leader>s'", "<ESC>`>a'<ESC>`<i'<ESC>", opts)
+keymap("x", "<leader>s'", "<ESC>`>a'<ESC>`<i'<ESC>", opts)
+
+local function get_surround()
+    local function findItem(tbl, val)
+        for i = 1, #tbl, 1 do
+            if tbl[i] == val then
+                return i
+            end
+        end
+    end
+    local surroundList = { '(', ')', '[', ']', '{', '}', '<', '>', '"', '\'' }
+    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+    local curChar = vim.fn.getline(row):sub(col + 1, col + 1)
+    if findItem(surroundList, curChar) then
+        vim.cmd [[normal mm%]]
+        local row2, col2 = unpack(vim.api.nvim_win_get_cursor(0))
+        vim.cmd [[normal `m]]
+        if row ~= row2 or col ~= col2 then
+            vim.cmd [[normal mm%x`mx]]
+        end
+    end
+end
+
+vim.keymap.set("n", "<leader>db", get_surround, opts)
