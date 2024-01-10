@@ -63,3 +63,7 @@ vim.api.nvim_create_autocmd({ "BufNew", "VimEnter", "BufWinEnter", "BufRead", "F
 
 -- Restore cursor
 vim.cmd [[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
+
+-- Set highlight for trailing spaces
+vim.api.nvim_set_hl(0, "TrailingSpace", {bg = '#87787b'})
+vim.fn.matchadd("TrailingSpace", "\\s\\+$", -1)
