@@ -55,8 +55,9 @@ vim.api.nvim_create_autocmd({"BufAdd", "BufEnter", "BufReadPre" }, {
 })
 
 local augroup_comment = vim.api.nvim_create_augroup("comment_highlight_cmds", { clear = true })
-vim.api.nvim_create_autocmd({ "BufNew", "VimEnter", "BufWinEnter", "BufRead", "FileReadPost" }, {
-    pattern = "*.tex",
+-- vim.api.nvim_create_autocmd({ "BufNew", "VimEnter", "BufWinEnter", "BufRead", "FileReadPost" }, {
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = "tex",
     group = augroup_comment,
     command = "highlight Normal guifg=#CFF6FA"
 })
@@ -67,3 +68,9 @@ vim.cmd [[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\
 -- Set highlight for trailing spaces
 vim.api.nvim_set_hl(0, "TrailingSpace", {bg = '#87787b'})
 vim.fn.matchadd("TrailingSpace", "\\s\\+$", -1)
+local augroup_trailing = vim.api.nvim_create_augroup("trailing_highlight_cmds", { clear = true })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = "alpha",
+    group = augroup_trailing,
+    command = "call clearmatches()"
+})
