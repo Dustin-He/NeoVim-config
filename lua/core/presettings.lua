@@ -16,7 +16,7 @@ vim.api.nvim_create_autocmd({"BufAdd", "BufEnter", "BufReadPre" }, {
             local augroup_folding = vim.api.nvim_create_augroup("code_folding_cmds", { clear = true })
             vim.api.nvim_create_autocmd(
                 { "TextYankPost", "TextChanged",
-                    "TextChangedT", "BufWinEnter", "VimEnter",
+                    "BufWinEnter", "VimEnter",
                     "BufAdd", "BufRead", "FileReadPost" },
                 {
                     pattern = "*",
