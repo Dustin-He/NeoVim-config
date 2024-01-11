@@ -59,14 +59,21 @@ local augroup_comment = vim.api.nvim_create_augroup("comment_highlight_cmds", { 
 vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = "tex",
     group = augroup_comment,
-    command = "highlight Normal guifg=#CFF6FA"
+    callback = function ()
+        vim.api.nvim_set_hl(0, "TexRefConcealedArg", {fg = '#FFD1B8'})
+        vim.api.nvim_set_hl(0, "Normal", {fg = '#CFF6FA'})
+        vim.api.nvim_set_hl(0, "TexEnvOpt", {fg = '#FFD1B8'})
+        vim.api.nvim_set_hl(0, "TexEnvArgName", {fg = '#FFD1B8'})
+        vim.api.nvim_set_hl(0, "texArg", {fg = '#FFD1B8'})
+    end
+    -- command = "highlight Normal guifg=#CFF6FA"
 })
 
 -- Restore cursor
 vim.cmd [[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
 
 -- Set highlight for trailing spaces
-vim.api.nvim_set_hl(0, "TrailingSpace", {bg = '#87787b'})
+vim.api.nvim_set_hl(0, "TrailingSpace", {bg = '#87787B'})
 vim.fn.matchadd("TrailingSpace", "\\s\\+$", -1)
 local augroup_trailing = vim.api.nvim_create_augroup("trailing_highlight_cmds", { clear = true })
 vim.api.nvim_create_autocmd({ "FileType" }, {
