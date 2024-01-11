@@ -12,8 +12,9 @@ local vimtex = {{
             let g:vimtex_view_skim_sync = 1
             let g:vimtex_view_skim_activate = 1
             let g:vimtex_view_automatic = 1
-            let g:vimtex_compiler_latexmk = {'continuous' : 0} 
+            let g:vimtex_compiler_latexmk = {'continuous' : 0}
             let g:vimtex_complete_enabled = 0
+            let g:vimtex_syntax_enabled = 0
             let g:vimtex_compiler_latexmk_engines = {
                 \'_'    : '-pdflatex',
             \}

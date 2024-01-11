@@ -61,11 +61,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     group = augroup_comment,
     callback = function ()
         vim.api.nvim_set_hl(0, "Normal", {fg = '#CFF6FA'})
-        vim.api.nvim_set_hl(0, "TexRefConcealedArg", {fg = '#FFD1B8'})
-        vim.api.nvim_set_hl(0, "TexRefArg", {fg = '#FFD1B8'})
-        vim.api.nvim_set_hl(0, "TexEnvOpt", {fg = '#FFD1B8'})
-        vim.api.nvim_set_hl(0, "TexEnvArgName", {fg = '#FFD1B8'})
-        vim.api.nvim_set_hl(0, "texArg", {fg = '#FFD1B8'})
     end
     -- command = "highlight Normal guifg=#CFF6FA"
 })
