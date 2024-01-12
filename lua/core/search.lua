@@ -54,7 +54,7 @@ local function googleTranslate(opts)
     local suffix = ""
     local prefix = ""
     local searchString = table.concat(opts.fargs, " ", 2, #opts.fargs)
-    if (opts.fargs[1] == "tl=zh") then
+    if opts.fargs[1] == "tl=zh" then
         suffix = "&tl=zh-CN&op=translate"
         prefix = "?sl=en&text="
     elseif opts.fargs[1] == "tl=en" then
@@ -65,7 +65,6 @@ local function googleTranslate(opts)
         suffix = "&tl=zh-CN&op=translate"
         prefix = "?sl=auto&text="
     end
-    searchString = opts.args
     local reg = replaceStringReg(searchString)
     if reg.b then
         searchString = reg.c
