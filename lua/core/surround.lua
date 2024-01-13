@@ -49,17 +49,27 @@ local function getSurround()
         if curChar == "\"" then
             padding = "\\"
         end
-        local cmds = "execute \"normal! vi" .. padding .. curChar .. "\\<ESC>\""
+        -- vim.print(curChar)
         vim.cmd [[normal! mm]]
+        local cmds = 'execute "normal! vi' .. padding .. curChar .. '\\<ESC>"'
+        -- vim.print(cmds)
         vim.cmd(cmds)
+        -- Send <ESC> to exit visual mode if no matched pattern
+        local keys = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+        vim.api.nvim_feedkeys(keys, "v", false)
         local row2S = vim.fn.line("'<")
         local col2S = vim.fn.col("'<")
         local row2E = vim.fn.line("'>")
         local col2E = vim.fn.col("'>")
-        if (row2S < row2E) or (row2S == row2E and col2S < col2E - 1) then
-            return { 3, curChar }
-        elseif row2S == row2E and col2S == col2E - 1 then
-            return { 4, curChar }
+        -- col is 1-indexed
+        col = col + 1
+        if row2S ~= 0 and row2E ~= 0 then
+            -- vim.print(row2S, col2S, row2E, col2E, row, col)
+            if ((row2S == row and col2S > col)) or ((row2E == row and col2E < col)) then
+                return { 3, curChar }
+            elseif row2S == row and col2S and col2S == col2E - 1 then
+                return { 4, curChar }
+            end
         end
     end
     return { 0, '' }
@@ -78,7 +88,7 @@ local function delSurround()
         ]]
     elseif (ok[1] == 4) then
         vim.cmd [[
-            normal! `<xx
+            normal! `<xx`m
         ]]
     end
 end
@@ -87,7 +97,7 @@ end
 local function chSurround_b()
     local ok = getSurround()
     if ok[2] == '(' or ok[2] == ')' then
-        vim.cmd[[normal! l]]
+        vim.cmd [[normal! l]]
         return
     end
     if ok[1] == 2 then
@@ -109,7 +119,7 @@ end
 local function chSurround_B()
     local ok = getSurround()
     if ok[2] == '{' or ok[2] == '}' then
-        vim.cmd[[normal! l]]
+        vim.cmd [[normal! l]]
         return
     end
     if ok[1] == 2 then
@@ -131,7 +141,7 @@ end
 local function chSurround_m()
     local ok = getSurround()
     if ok[2] == '[' or ok[2] == ']' then
-        vim.cmd[[normal! l]]
+        vim.cmd [[normal! l]]
         return
     end
     if ok[1] == 2 then
@@ -157,7 +167,7 @@ end
 local function chSurround_g()
     local ok = getSurround()
     if ok[2] == '<' or ok[2] == '>' then
-        vim.cmd[[normal! l]]
+        vim.cmd [[normal! l]]
         return
     end
     if ok[1] == 2 then
@@ -179,12 +189,12 @@ end
 local function chSurround_q()
     local ok = getSurround()
     if ok[2] == '\'' or ok[2] == '\'' then
-        vim.cmd[[normal! l]]
+        vim.cmd [[normal! l]]
         return
     end
-    if ok[1] == 2 or ok[1] ==1 then
+    if ok[1] == 2 or ok[1] == 1 then
         vim.cmd [[normal! mm%r'`mr']]
-    elseif (ok[1] == 3)then
+    elseif (ok[1] == 3) then
         vim.cmd [[
             normal! `>lr'`<hr'`m
         ]]
@@ -199,12 +209,12 @@ end
 local function chSurround_Q()
     local ok = getSurround()
     if ok[2] == '"' or ok[2] == '"' then
-        vim.cmd[[normal! l]]
+        vim.cmd [[normal! l]]
         return
     end
-    if ok[1] == 2 or ok[1] ==1 then
+    if ok[1] == 2 or ok[1] == 1 then
         vim.cmd [[normal! mm%r"`mr"]]
-    elseif (ok[1] == 3)then
+    elseif (ok[1] == 3) then
         vim.cmd [[
             normal! `>lr"`<hr"`m
         ]]
@@ -219,12 +229,12 @@ end
 local function chSurround_I()
     local ok = getSurround()
     if ok[2] == '`' or ok[2] == '`' then
-        vim.cmd[[normal! l]]
+        vim.cmd [[normal! l]]
         return
     end
-    if ok[1] == 2 or ok[1] ==1 then
+    if ok[1] == 2 or ok[1] == 1 then
         vim.cmd [[normal! mm%r``mr`]]
-    elseif (ok[1] == 3)then
+    elseif (ok[1] == 3) then
         vim.cmd [[
             normal! `>lr``<hr``m
         ]]
@@ -252,4 +262,3 @@ vim.keymap.set("n", "<leader>c[", chSurround_m, opts)
 vim.keymap.set("n", "<leader>c]", chSurround_m, opts)
 vim.keymap.set("n", "<leader>c<", chSurround_g, opts)
 vim.keymap.set("n", "<leader>c>", chSurround_g, opts)
-
