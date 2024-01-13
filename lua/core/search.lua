@@ -212,3 +212,43 @@ vim.api.nvim_create_user_command("Google", googleSearch, { range = true, nargs =
 vim.api.nvim_create_user_command("Scholar", googleScholar, { range = true, nargs = "*", complete = scholarComplete })
 vim.api.nvim_create_user_command("Translate", googleTranslate,
     { range = true, nargs = "*", complete = translateComplete })
+
+--- @diagnostic disable: unused-local
+local function baiduSearchKey(type, text, s, e)
+    -- Char
+    if type == "char" then
+        local joinedText = vim.fn.join(text, " ")
+        baiduSearch({args = joinedText})
+    end
+    -- Line
+    if type == "line" then
+        local joinedText = vim.fn.join(text, " ")
+        baiduSearch({args = joinedText})
+    end
+    -- Block
+    if type == "block" then
+        vim.print("Can not search with Blog")
+    end
+end
+
+--- @diagnostic disable: unused-local
+local function googleSearchKey(type, text, s, e)
+    -- Char
+    if type == "char" then
+        local joinedText = vim.fn.join(text, " ")
+        googleSearch({args = joinedText})
+    end
+    -- Line
+    if type == "line" then
+        local joinedText = vim.fn.join(text, " ")
+        googleSearch({args = joinedText})
+    end
+    -- Block
+    if type == "block" then
+        vim.print("Can not search with Blog")
+    end
+end
+
+require("core.operator").CreateOperators({ "n", "v" }, "gsb", baiduSearchKey, true, "Search with Baidu")
+require("core.operator").CreateOperators({ "n", "v" }, "gsg", googleSearchKey, true, "Search with Google")
+
