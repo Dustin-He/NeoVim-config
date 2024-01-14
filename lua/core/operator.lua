@@ -1,26 +1,34 @@
 M = {
-    opfunc = function(type)
-        print(type) -- vim.print does not input the value of type
-    end
+    __opfunc = function(type)
+        print("No defined opfunc: ", type) -- vim.print does not input the value of type
+    end,
 }
 
-local opts = { silent = true, noremap = true, desc = "" }
+local opts = { expr = true, silent = true, noremap = true, desc = "" }
+local optsLinewise = { silent = true, noremap = true, desc = "" }
 
 -- Function for line-wise operator, which saves the mark and restores it
 local function saveMarkOP()
     local oldMark = vim.api.nvim_buf_get_mark(0, "m")
     vim.cmd("normal! mm0g@$`m")
+    -- vim.print(oldMark[1], oldMark[2])
     vim.api.nvim_buf_set_mark(0, "m", oldMark[1], oldMark[2], {})
 end
 
 -- Function to register the operatorfunc
-local function registerOP(func, linewise)
-    M.opfunc = func
-    vim.go.operatorfunc = "v:lua.require'core.operator'.opfunc"
+local function registerOP(func, linewise, changable)
     if linewise then
-        return saveMarkOP;
+        return function()
+            require("core.operator").__opfunc = CreateOperatorFunc(func, changable)
+            vim.go.operatorfunc = "v:lua.require'core.operator'.__opfunc"
+            saveMarkOP()
+        end
     else
-        return "g@"
+        return function()
+            require("core.operator").__opfunc = CreateOperatorFunc(func, changable)
+            vim.go.operatorfunc = "v:lua.require'core.operator'.__opfunc"
+            return "g@"
+        end
     end
 end
 
@@ -77,7 +85,7 @@ function CreateOperatorFunc(func, changable)
                         returnedText
                     )
                 elseif type == "block" then
-                    vim.print("hi")
+                    -- vim.print("hi")
                     local oldReg = vim.fn.getreg("m")
                     local joinedText = ""
                     for _, v in ipairs(returnedText) do
@@ -95,12 +103,13 @@ function CreateOperatorFunc(func, changable)
 end
 
 -- Function to crate the operator
-function M.CreateOperators(mode, mapping, func, linewise, des)
+function M.CreateOperators(mode, mapping, func, linewise, changable, des)
     vim.validate({
         mode = { mode, { "string", "table" } },
         mapping = { mapping, "string" },
         func = { func, "function" },
         linewise = { linewise, "boolean" },
+        changable = { changable, "boolean" },
         des = { des, "string" },
     })
     -- Default value of nvim
@@ -111,12 +120,12 @@ function M.CreateOperators(mode, mapping, func, linewise, des)
     end
     -- Map the key in different modes
     for _, m in ipairs(mode) do
-        vim.keymap.set(m, mapping, registerOP(func, false), opts)
+        vim.keymap.set(m, mapping, registerOP(func, false, changable), opts)
     end
     -- Map the key in line pattern
     if linewise then
         mapping = mapping .. mapping:sub(-1, -1)
-        vim.keymap.set("n", mapping, registerOP(CreateOperatorFunc(func, true), true), opts)
+        vim.keymap.set("n", mapping, registerOP(func, true, changable), optsLinewise)
     end
 end
 

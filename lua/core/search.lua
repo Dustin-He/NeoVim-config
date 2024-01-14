@@ -216,6 +216,7 @@ vim.api.nvim_create_user_command("Translate", googleTranslate,
 --- @diagnostic disable: unused-local
 local function baiduSearchKey(type, text, s, e)
     -- Char
+    vim.print("baidu")
     if type == "char" then
         local joinedText = vim.fn.join(text, " ")
         baiduSearch({args = joinedText})
@@ -227,7 +228,7 @@ local function baiduSearchKey(type, text, s, e)
     end
     -- Block
     if type == "block" then
-        vim.print("Can not search with Blog")
+        vim.print("Can not search with Block")
     end
 end
 
@@ -245,10 +246,69 @@ local function googleSearchKey(type, text, s, e)
     end
     -- Block
     if type == "block" then
-        vim.print("Can not search with Blog")
+        vim.print("Can not search with Block")
     end
 end
 
-require("core.operator").CreateOperators({ "n", "v" }, "gsb", baiduSearchKey, true, "Search with Baidu")
-require("core.operator").CreateOperators({ "n", "v" }, "gsg", googleSearchKey, true, "Search with Google")
+--- @diagnostic disable: unused-local
+local function scholarSearchKey(type, text, s, e)
+    -- Char
+    if type == "char" then
+        local wordList = {}
+        for _, v in ipairs(text) do
+            table.insert(wordList, vim.fn.split(v, '\\s'))
+        end
+        wordList = vim.fn.flatten(wordList)
+        -- vim.print(wordList)
+        googleScholar({fargs = wordList})
+    end
+    -- Line
+    if type == "line" then
+        local wordList = {}
+        for _, v in ipairs(text) do
+            table.insert(wordList, vim.fn.split(v, '\\s'))
+        end
+        wordList = vim.fn.flatten(wordList)
+        vim.print(wordList)
+        googleScholar({fargs = wordList})
+    end
+    -- Block
+    if type == "block" then
+        vim.print("Can not search with Block")
+    end
+end
+
+--- @diagnostic disable: unused-local
+local function translateSearchKey(type, text, s, e)
+    -- Char
+    vim.print("translate")
+    if type == "char" then
+        local wordList = {}
+        for _, v in ipairs(text) do
+            table.insert(wordList, vim.fn.split(v, '\\s'))
+        end
+        wordList = vim.fn.flatten(wordList)
+        -- vim.print(wordList)
+        googleTranslate({fargs = wordList})
+    end
+    -- Line
+    if type == "line" then
+        local wordList = {}
+        for _, v in ipairs(text) do
+            table.insert(wordList, vim.fn.split(v, '\\s'))
+        end
+        wordList = vim.fn.flatten(wordList)
+        vim.print(wordList)
+        googleTranslate({fargs = wordList})
+    end
+    -- Block
+    if type == "block" then
+        vim.print("Can not search with Block")
+    end
+end
+
+require("core.operator").CreateOperators({ "n", "v" }, "gsb", baiduSearchKey, true, false, "Search with Baidu")
+require("core.operator").CreateOperators({ "n", "v" }, "gsg", googleSearchKey, true, false, "Search with Google")
+require("core.operator").CreateOperators({ "n", "v" }, "gss", scholarSearchKey, true, false, "Search with Google Scholar")
+require("core.operator").CreateOperators({ "n", "v" }, "gst", translateSearchKey, true, false, "Google translate")
 
