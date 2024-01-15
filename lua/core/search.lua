@@ -216,7 +216,7 @@ vim.api.nvim_create_user_command("Translate", googleTranslate,
 --- @diagnostic disable: unused-local
 local function baiduSearchKey(type, text, s, e)
     -- Char
-    vim.print("baidu")
+    -- vim.print("baidu")
     if type == "char" then
         local joinedText = vim.fn.join(text, " ")
         baiduSearch({args = joinedText})
@@ -269,7 +269,7 @@ local function scholarSearchKey(type, text, s, e)
             table.insert(wordList, vim.fn.split(v, '\\s'))
         end
         wordList = vim.fn.flatten(wordList)
-        vim.print(wordList)
+        -- vim.print(wordList)
         googleScholar({fargs = wordList})
     end
     -- Block
@@ -298,7 +298,7 @@ local function translateSearchKey(type, text, s, e)
             table.insert(wordList, vim.fn.split(v, '\\s'))
         end
         wordList = vim.fn.flatten(wordList)
-        vim.print(wordList)
+        -- vim.print(wordList)
         googleTranslate({fargs = wordList})
     end
     -- Block
