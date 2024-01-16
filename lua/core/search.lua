@@ -281,7 +281,7 @@ end
 --- @diagnostic disable: unused-local
 local function translateSearchKey(type, text, s, e)
     -- Char
-    vim.print("translate")
+    -- vim.print("translate")
     if type == "char" then
         local wordList = {}
         for _, v in ipairs(text) do
