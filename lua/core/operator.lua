@@ -10,9 +10,11 @@ local optsLinewise = { silent = true, noremap = true, desc = "" }
 -- Function for line-wise operator, which saves the mark and restores it
 local function saveMarkOP()
     local oldMark = vim.api.nvim_buf_get_mark(0, "m")
-    vim.cmd("normal! mm0g@$`m")
+    vim.cmd("normal! mmg@$`m")
     -- vim.print(oldMark[1], oldMark[2])
-    vim.api.nvim_buf_set_mark(0, "m", oldMark[1], oldMark[2], {})
+    if oldMark[1] ~= 0 and oldMark[2] ~= 0 then
+        vim.api.nvim_buf_set_mark(0, "m", oldMark[1], oldMark[2], {})
+    end
 end
 
 -- Function to register the operatorfunc

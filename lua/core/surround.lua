@@ -4,21 +4,53 @@ local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
 -- Surround keymaps in visual mode
-keymap("x", "<leader>sb", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
-keymap("x", "<leader>sB", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
-keymap("x", "<leader>s(", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
-keymap("x", "<leader>s)", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
-keymap("x", "<leader>s{", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
-keymap("x", "<leader>s}", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
-keymap("x", "<leader>s[", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
-keymap("x", "<leader>s]", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
-keymap("x", "<leader>s<", "<ESC>`>a><ESC>`<i<<ESC>", opts)
-keymap("x", "<leader>s>", "<ESC>`>a><ESC>`<i<<ESC>", opts)
-keymap("x", "<leader>s\"", "<ESC>`>a\"<ESC>`<i\"<ESC>", opts)
-keymap("x", "<leader>s\"", "<ESC>`>a\"<ESC>`<i\"<ESC>", opts)
-keymap("x", "<leader>s'", "<ESC>`>a'<ESC>`<i'<ESC>", opts)
-keymap("x", "<leader>s'", "<ESC>`>a'<ESC>`<i'<ESC>", opts)
-keymap("x", "<leader>s`", "<ESC>`>a`<ESC>`<i`<ESC>", opts)
+-- keymap("x", "<leader>sb", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
+-- keymap("x", "<leader>sB", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
+-- keymap("x", "<leader>s(", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
+-- keymap("x", "<leader>s)", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
+-- keymap("x", "<leader>s{", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
+-- keymap("x", "<leader>s}", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
+-- keymap("x", "<leader>s[", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
+-- keymap("x", "<leader>s]", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
+-- keymap("x", "<leader>s<", "<ESC>`>a><ESC>`<i<<ESC>", opts)
+-- keymap("x", "<leader>s>", "<ESC>`>a><ESC>`<i<<ESC>", opts)
+-- keymap("x", "<leader>s\"", "<ESC>`>a\"<ESC>`<i\"<ESC>", opts)
+-- keymap("x", "<leader>s'", "<ESC>`>a'<ESC>`<i'<ESC>", opts)
+-- keymap("x", "<leader>s`", "<ESC>`>a`<ESC>`<i`<ESC>", opts)
+
+local function addSurround(l, r)
+    --- @diagnostic disable: unused-local
+    return function(type, text, s, e)
+        if type == 'char' then
+            local num = #text
+            text[1] = l .. text[1]
+            text[num] = text[num] .. r
+        elseif type == 'line' then
+            for i, _ in ipairs(text) do
+                text[i] = l .. text[i] .. r
+            end
+        elseif type == 'block' then
+            for i, _ in ipairs(text) do
+                text[i] = l .. text[i] .. r
+            end
+        end
+        return text
+    end
+end
+
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>sb", addSurround('(', ')'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s(", addSurround('(', ')'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s)", addSurround('(', ')'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>sB", addSurround('{', '}'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s{", addSurround('{', '}'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s}", addSurround('{', '}'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s[", addSurround('[', ']'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s]", addSurround('[', ']'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s<", addSurround('<', '>'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s>", addSurround('<', '>'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s\"", addSurround('"', '"'), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s'", addSurround('\'', '\''), true, true, "Add brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s`", addSurround('`', '`'), true, true, "Add brackets")
 
 -- get the surround characters
 local function getSurround()
