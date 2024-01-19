@@ -29,6 +29,37 @@ local nvim_cmp = {
                 return
             end
 
+            lspkind.init({
+                symbol_map = {
+                    Text = "󰉿",
+                    Method = "󰆧",
+                    Function = "󰊕",
+                    Constructor = "",
+                    Field = "󰜢",
+                    Variable = "󰀫",
+                    Class = "󰠱",
+                    Interface = "",
+                    Module = "",
+                    Property = "󰜢",
+                    Unit = "󰑭",
+                    Value = "󰎠",
+                    Enum = "",
+                    Keyword = "󰌋",
+                    Snippet = "",
+                    Color = "󰏘",
+                    File = "󰈙",
+                    Reference = "󰈇",
+                    Folder = "󰉋",
+                    EnumMember = "",
+                    Constant = "󰏿",
+                    Struct = "󰙅",
+                    Event = "",
+                    Operator = "󰆕",
+                    TypeParameter = "",
+                    Copilot = ""
+                },
+            })
+
             local local_mapping = {
                 -- 上一个
                 ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
@@ -84,17 +115,20 @@ local nvim_cmp = {
                 },
                 -- 来源
                 sources = cmp.config.sources({
+                        { name = 'copilot' },
                         { name = 'nvim_lsp' },
-                        { name = "nvim_lua" },                  -- For luasnip users.
+                        { name = "nvim_lua" },                 -- For luasnip users.
                         { name = 'luasnip' } },
-                    { { name = 'buffer' }, { name = 'path' } }  -- no cmdline
+                    { { name = 'buffer' }, { name = 'path' } } -- no cmdline
                 ),
 
                 -- 快捷键
                 -- mapping = require'keybindings'.cmp(cmp),
                 mapping = cmp.mapping.preset.insert(local_mapping),
 
+
                 -- 使用lspkind-nvim显示类型图标
+                --- @diagnostic disable:missing-fields
                 formatting = {
                     format = lspkind.cmp_format({
                         with_text = true, -- do not show text alongside icons
