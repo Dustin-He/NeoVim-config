@@ -2,7 +2,7 @@ local opt = vim.opt
 
 -- Open files larger than 1 GB
 local augroup_large = vim.api.nvim_create_augroup("large_file_cmds", { clear = true })
-vim.api.nvim_create_autocmd({"BufAdd", "BufEnter", "BufReadPre" }, {
+vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter", "BufReadPre" }, {
     pattern = "*",
     group = augroup_large,
     once = true, -- curious?
@@ -50,9 +50,10 @@ vim.api.nvim_create_autocmd({"BufAdd", "BufEnter", "BufReadPre" }, {
                 require("nvim-tree.api").tree.open()
             end
             vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+            vim.cmd [[set formatoptions-=cro]]
         else
-            vim.cmd[[filetype off]]
-            vim.cmd[[syntax off]]
+            vim.cmd [[filetype off]]
+            vim.cmd [[syntax off]]
             opt.wrap = false
             opt.ttyfast = true
             opt.hlsearch = false
@@ -67,8 +68,8 @@ local augroup_comment = vim.api.nvim_create_augroup("comment_highlight_cmds", { 
 vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = "tex",
     group = augroup_comment,
-    callback = function ()
-        vim.api.nvim_set_hl(0, "Normal", {fg = '#CFF6FA'})
+    callback = function()
+        vim.api.nvim_set_hl(0, "Normal", { fg = '#CFF6FA' })
     end
     -- command = "highlight Normal guifg=#CFF6FA"
 })
@@ -77,7 +78,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.cmd [[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
 
 -- Set highlight for trailing spaces
-vim.api.nvim_set_hl(0, "TrailingSpace", {bg = '#87787B'})
+vim.api.nvim_set_hl(0, "TrailingSpace", { bg = '#87787B' })
 vim.fn.matchadd("TrailingSpace", "\\s\\+$", -1)
 local augroup_trailing = vim.api.nvim_create_augroup("trailing_highlight_cmds", { clear = true })
 vim.api.nvim_create_autocmd({ "FileType" }, {

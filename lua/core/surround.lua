@@ -3,21 +3,6 @@ local opts = { noremap = true, silent = true }
 -- local keymap = vim.keymap
 local keymap = vim.api.nvim_set_keymap
 
--- Surround keymaps in visual mode
--- keymap("x", "<leader>sb", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
--- keymap("x", "<leader>sB", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
--- keymap("x", "<leader>s(", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
--- keymap("x", "<leader>s)", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
--- keymap("x", "<leader>s{", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
--- keymap("x", "<leader>s}", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
--- keymap("x", "<leader>s[", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
--- keymap("x", "<leader>s]", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
--- keymap("x", "<leader>s<", "<ESC>`>a><ESC>`<i<<ESC>", opts)
--- keymap("x", "<leader>s>", "<ESC>`>a><ESC>`<i<<ESC>", opts)
--- keymap("x", "<leader>s\"", "<ESC>`>a\"<ESC>`<i\"<ESC>", opts)
--- keymap("x", "<leader>s'", "<ESC>`>a'<ESC>`<i'<ESC>", opts)
--- keymap("x", "<leader>s`", "<ESC>`>a`<ESC>`<i`<ESC>", opts)
-
 local function addSurround(l, r)
     --- @diagnostic disable: unused-local
     return function(type, text, s, e)
@@ -41,15 +26,20 @@ end
 require("core.operator").CreateOperators({ "n", "v" }, "<leader>sb", addSurround('(', ')'), true, true, "Add brackets")
 require("core.operator").CreateOperators({ "n", "v" }, "<leader>s(", addSurround('(', ')'), true, true, "Add brackets")
 require("core.operator").CreateOperators({ "n", "v" }, "<leader>s)", addSurround('(', ')'), true, true, "Add brackets")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>sB", addSurround('{', '}'), true, true, "Add curly brackets")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s{", addSurround('{', '}'), true, true, "Add curly brackets")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s}", addSurround('{', '}'), true, true, "Add curly brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>sB", addSurround('{', '}'), true, true,
+    "Add curly brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s{", addSurround('{', '}'), true, true,
+    "Add curly brackets")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s}", addSurround('{', '}'), true, true,
+    "Add curly brackets")
 require("core.operator").CreateOperators({ "n", "v" }, "<leader>s[", addSurround('[', ']'), true, true, "Add []")
 require("core.operator").CreateOperators({ "n", "v" }, "<leader>s]", addSurround('[', ']'), true, true, "Add []")
 require("core.operator").CreateOperators({ "n", "v" }, "<leader>s<", addSurround('<', '>'), true, true, "Add <>")
 require("core.operator").CreateOperators({ "n", "v" }, "<leader>s>", addSurround('<', '>'), true, true, "Add <>")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s\"", addSurround('"', '"'), true, true, "Add double quotes")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s'", addSurround('\'', '\''), true, true, "Add single quotes")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s\"", addSurround('"', '"'), true, true,
+    "Add double quotes")
+require("core.operator").CreateOperators({ "n", "v" }, "<leader>s'", addSurround('\'', '\''), true, true,
+    "Add single quotes")
 require("core.operator").CreateOperators({ "n", "v" }, "<leader>s`", addSurround('`', '`'), true, true, "Add `")
 
 -- get the surround characters
@@ -125,155 +115,26 @@ local function delSurround()
     end
 end
 
--- Change the surround to ()
-local function chSurround_b()
-    local ok = getSurround()
-    if ok[2] == '(' or ok[2] == ')' then
-        vim.cmd [[normal! l]]
-        return
-    end
-    if ok[1] == 2 then
-        vim.cmd [[normal! mm%r(`mr)]]
-    elseif ok[1] == 1 then
-        vim.cmd [[normal! mm%r)`mr(]]
-    elseif (ok[1] == 3) then
-        vim.cmd [[
-            normal! `>lr)`<hr(`m
-        ]]
-    elseif (ok[1] == 4) then
-        vim.cmd [[
-            normal! `<r(lr)`m
-        ]]
-    end
-end
-
--- Change the surround to {}
-local function chSurround_B()
-    local ok = getSurround()
-    if ok[2] == '{' or ok[2] == '}' then
-        vim.cmd [[normal! l]]
-        return
-    end
-    if ok[1] == 2 then
-        vim.cmd [[normal! mm%r{`mr}]]
-    elseif ok[1] == 1 then
-        vim.cmd [[normal! mm%r}`mr{]]
-    elseif (ok[1] == 3) then
-        vim.cmd [[
-            normal! `>lr}`<hr{`m
-        ]]
-    elseif (ok[1] == 4) then
-        vim.cmd [[
-            normal! `<r{lr}`m
-        ]]
-    end
-end
-
--- Change the surround to []
-local function chSurround_m()
-    local ok = getSurround()
-    if ok[2] == '[' or ok[2] == ']' then
-        vim.cmd [[normal! l]]
-        return
-    end
-    if ok[1] == 2 then
-        vim.cmd [[
-            normal! mm%r[`mr]
-        ]]
-    elseif ok[1] == 1 then
-        vim.cmd [[
-            normal! mm%r]`mr[
-        ]]
-    elseif (ok[1] == 3) then
-        vim.cmd [[
-            normal! `>lr]`<hr[`m
-        ]]
-    elseif (ok[1] == 4) then
-        vim.cmd [[
-            normal! `<r[lr]`m
-        ]]
-    end
-end
-
--- Change the surround to <>
-local function chSurround_g()
-    local ok = getSurround()
-    if ok[2] == '<' or ok[2] == '>' then
-        vim.cmd [[normal! l]]
-        return
-    end
-    if ok[1] == 2 then
-        vim.cmd [[normal! mm%r<`mr>]]
-    elseif ok[1] == 1 then
-        vim.cmd [[normal! mm%r>`mr<]]
-    elseif (ok[1] == 3) then
-        vim.cmd [[
-            normal! `>lr>`<hr<`m
-        ]]
-    elseif (ok[1] == 4) then
-        vim.cmd [[
-            normal! `<r<lr>`m
-        ]]
-    end
-end
-
--- Change the surround to ''
-local function chSurround_q()
-    local ok = getSurround()
-    if ok[2] == '\'' or ok[2] == '\'' then
-        vim.cmd [[normal! l]]
-        return
-    end
-    if ok[1] == 2 or ok[1] == 1 then
-        vim.cmd [[normal! mm%r'`mr']]
-    elseif (ok[1] == 3) then
-        vim.cmd [[
-            normal! `>lr'`<hr'`m
-        ]]
-    elseif (ok[1] == 4) then
-        vim.cmd [[
-            normal! `<r'lr'`m
-        ]]
-    end
-end
-
--- Change the surround to ""
-local function chSurround_Q()
-    local ok = getSurround()
-    if ok[2] == '"' or ok[2] == '"' then
-        vim.cmd [[normal! l]]
-        return
-    end
-    if ok[1] == 2 or ok[1] == 1 then
-        vim.cmd [[normal! mm%r"`mr"]]
-    elseif (ok[1] == 3) then
-        vim.cmd [[
-            normal! `>lr"`<hr"`m
-        ]]
-    elseif (ok[1] == 4) then
-        vim.cmd [[
-            normal! `<r"lr"`m
-        ]]
-    end
-end
-
--- Change the surround to ``
-local function chSurround_I()
-    local ok = getSurround()
-    if ok[2] == '`' or ok[2] == '`' then
-        vim.cmd [[normal! l]]
-        return
-    end
-    if ok[1] == 2 or ok[1] == 1 then
-        vim.cmd [[normal! mm%r``mr`]]
-    elseif (ok[1] == 3) then
-        vim.cmd [[
-            normal! `>lr``<hr``m
-        ]]
-    elseif (ok[1] == 4) then
-        vim.cmd [[
-            normal! `<r`lr``m
-        ]]
+local function changeSurround(lc, rc)
+    return function()
+        local ok = getSurround()
+        if ok[2] == lc or ok[2] == rc then
+            vim.cmd [[normal! l]]
+            return
+        end
+        if ok[1] == 2 then
+            local cmds = "normal! mm%r" .. lc .. "`mr" .. rc
+            vim.cmd(cmds)
+        elseif ok[1] == 1 then
+            local cmds = "normal! mm%r" .. rc .. "`mr" .. lc
+            vim.cmd(cmds)
+        elseif (ok[1] == 3) then
+            local cmds = "normal! `>lr" .. rc .. "`<hr" .. lc .. "`m"
+            vim.cmd(cmds)
+        elseif (ok[1] == 4) then
+            local cmds = "normal! `<r" .. lc .. "lr" .. rc .. "`m"
+            vim.cmd(cmds)
+        end
     end
 end
 
@@ -281,16 +142,199 @@ end
 vim.keymap.set("n", "<leader>db", delSurround, opts)
 
 -- keymap for change the surround
-vim.keymap.set("n", "<leader>cb", chSurround_b, opts)
-vim.keymap.set("n", "<leader>c(", chSurround_b, opts)
-vim.keymap.set("n", "<leader>c)", chSurround_b, opts)
-vim.keymap.set("n", "<leader>cB", chSurround_B, opts)
-vim.keymap.set("n", "<leader>c{", chSurround_B, opts)
-vim.keymap.set("n", "<leader>c}", chSurround_B, opts)
-vim.keymap.set("n", "<leader>c\"", chSurround_Q, opts)
-vim.keymap.set("n", "<leader>c'", chSurround_q, opts)
-vim.keymap.set("n", "<leader>c`", chSurround_I, opts)
-vim.keymap.set("n", "<leader>c[", chSurround_m, opts)
-vim.keymap.set("n", "<leader>c]", chSurround_m, opts)
-vim.keymap.set("n", "<leader>c<", chSurround_g, opts)
-vim.keymap.set("n", "<leader>c>", chSurround_g, opts)
+vim.keymap.set("n", "<leader>cb", changeSurround('(', ')'), opts)
+vim.keymap.set("n", "<leader>c(", changeSurround('(', ')'), opts)
+vim.keymap.set("n", "<leader>c)", changeSurround('(', ')'), opts)
+vim.keymap.set("n", "<leader>cB", changeSurround('{', '}'), opts)
+vim.keymap.set("n", "<leader>c{", changeSurround('{', '}'), opts)
+vim.keymap.set("n", "<leader>c}", changeSurround('{', '}'), opts)
+vim.keymap.set("n", "<leader>c[", changeSurround('[', ']'), opts)
+vim.keymap.set("n", "<leader>c]", changeSurround('[', ']'), opts)
+vim.keymap.set("n", "<leader>c<", changeSurround('<', '>'), opts)
+vim.keymap.set("n", "<leader>c>", changeSurround('<', '>'), opts)
+vim.keymap.set("n", "<leader>c'", changeSurround('\'', '\''), opts)
+vim.keymap.set("n", "<leader>c\"", changeSurround('"', '"'), opts)
+vim.keymap.set("n", "<leader>c`", changeSurround('`', '`'), opts)
+
+
+-- Surround keymaps in visual mode
+-- keymap("x", "<leader>sb", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
+-- keymap("x", "<leader>sB", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
+-- keymap("x", "<leader>s(", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
+-- keymap("x", "<leader>s)", "<ESC>`>a)<ESC>`<i(<ESC>", opts)
+-- keymap("x", "<leader>s{", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
+-- keymap("x", "<leader>s}", "<ESC>`>a}<ESC>`<i{<ESC>", opts)
+-- keymap("x", "<leader>s[", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
+-- keymap("x", "<leader>s]", "<ESC>`>a]<ESC>`<i[<ESC>", opts)
+-- keymap("x", "<leader>s<", "<ESC>`>a><ESC>`<i<<ESC>", opts)
+-- keymap("x", "<leader>s>", "<ESC>`>a><ESC>`<i<<ESC>", opts)
+-- keymap("x", "<leader>s\"", "<ESC>`>a\"<ESC>`<i\"<ESC>", opts)
+-- keymap("x", "<leader>s'", "<ESC>`>a'<ESC>`<i'<ESC>", opts)
+-- keymap("x", "<leader>s`", "<ESC>`>a`<ESC>`<i`<ESC>", opts)
+
+--
+-- -- Change the surround to ()
+-- local function chSurround_b()
+--     local ok = getSurround()
+--     if ok[2] == '(' or ok[2] == ')' then
+--         vim.cmd [[normal! l]]
+--         return
+--     end
+--     if ok[1] == 2 then
+--         vim.cmd [[normal! mm%r(`mr)]]
+--     elseif ok[1] == 1 then
+--         vim.cmd [[normal! mm%r)`mr(]]
+--     elseif (ok[1] == 3) then
+--         vim.cmd [[
+--             normal! `>lr)`<hr(`m
+--         ]]
+--     elseif (ok[1] == 4) then
+--         vim.cmd [[
+--             normal! `<r(lr)`m
+--         ]]
+--     end
+-- end
+--
+-- -- Change the surround to {}
+-- local function chSurround_B()
+--     local ok = getSurround()
+--     if ok[2] == '{' or ok[2] == '}' then
+--         vim.cmd [[normal! l]]
+--         return
+--     end
+--     if ok[1] == 2 then
+--         vim.cmd [[normal! mm%r{`mr}]]
+--     elseif ok[1] == 1 then
+--         vim.cmd [[normal! mm%r}`mr{]]
+--     elseif (ok[1] == 3) then
+--         vim.cmd [[
+--             normal! `>lr}`<hr{`m
+--         ]]
+--     elseif (ok[1] == 4) then
+--         vim.cmd [[
+--             normal! `<r{lr}`m
+--         ]]
+--     end
+-- end
+--
+-- -- Change the surround to []
+-- local function chSurround_m()
+--     local ok = getSurround()
+--     if ok[2] == '[' or ok[2] == ']' then
+--         vim.cmd [[normal! l]]
+--         return
+--     end
+--     if ok[1] == 2 then
+--         vim.cmd [[
+--             normal! mm%r[`mr]
+--         ]]
+--     elseif ok[1] == 1 then
+--         vim.cmd [[
+--             normal! mm%r]`mr[
+--         ]]
+--     elseif (ok[1] == 3) then
+--         vim.cmd [[
+--             normal! `>lr]`<hr[`m
+--         ]]
+--     elseif (ok[1] == 4) then
+--         vim.cmd [[
+--             normal! `<r[lr]`m
+--         ]]
+--     end
+-- end
+--
+-- -- Change the surround to <>
+-- local function chSurround_g()
+--     local ok = getSurround()
+--     if ok[2] == '<' or ok[2] == '>' then
+--         vim.cmd [[normal! l]]
+--         return
+--     end
+--     if ok[1] == 2 then
+--         vim.cmd [[normal! mm%r<`mr>]]
+--     elseif ok[1] == 1 then
+--         vim.cmd [[normal! mm%r>`mr<]]
+--     elseif (ok[1] == 3) then
+--         vim.cmd [[
+--             normal! `>lr>`<hr<`m
+--         ]]
+--     elseif (ok[1] == 4) then
+--         vim.cmd [[
+--             normal! `<r<lr>`m
+--         ]]
+--     end
+-- end
+--
+-- -- Change the surround to ''
+-- local function chSurround_q()
+--     local ok = getSurround()
+--     if ok[2] == '\'' or ok[2] == '\'' then
+--         vim.cmd [[normal! l]]
+--         return
+--     end
+--     if ok[1] == 2 or ok[1] == 1 then
+--         vim.cmd [[normal! mm%r'`mr']]
+--     elseif (ok[1] == 3) then
+--         vim.cmd [[
+--             normal! `>lr'`<hr'`m
+--         ]]
+--     elseif (ok[1] == 4) then
+--         vim.cmd [[
+--             normal! `<r'lr'`m
+--         ]]
+--     end
+-- end
+--
+-- -- Change the surround to ""
+-- local function chSurround_Q()
+--     local ok = getSurround()
+--     if ok[2] == '"' or ok[2] == '"' then
+--         vim.cmd [[normal! l]]
+--         return
+--     end
+--     if ok[1] == 2 or ok[1] == 1 then
+--         vim.cmd [[normal! mm%r"`mr"]]
+--     elseif (ok[1] == 3) then
+--         vim.cmd [[
+--             normal! `>lr"`<hr"`m
+--         ]]
+--     elseif (ok[1] == 4) then
+--         vim.cmd [[
+--             normal! `<r"lr"`m
+--         ]]
+--     end
+-- end
+--
+-- -- Change the surround to ``
+-- local function chSurround_I()
+--     local ok = getSurround()
+--     if ok[2] == '`' or ok[2] == '`' then
+--         vim.cmd [[normal! l]]
+--         return
+--     end
+--     if ok[1] == 2 or ok[1] == 1 then
+--         vim.cmd [[normal! mm%r``mr`]]
+--     elseif (ok[1] == 3) then
+--         vim.cmd [[
+--             normal! `>lr``<hr``m
+--         ]]
+--     elseif (ok[1] == 4) then
+--         vim.cmd [[
+--             normal! `<r`lr``m
+--         ]]
+--     end
+-- end
+
+-- vim.keymap.set("n", "<leader>cb", chSurround_b, opts)
+-- vim.keymap.set("n", "<leader>c(", chSurround_b, opts)
+-- vim.keymap.set("n", "<leader>c)", chSurround_b, opts)
+-- vim.keymap.set("n", "<leader>cB", chSurround_B, opts)
+-- vim.keymap.set("n", "<leader>c{", chSurround_B, opts)
+-- vim.keymap.set("n", "<leader>c}", chSurround_B, opts)
+-- vim.keymap.set("n", "<leader>c\"", chSurround_Q, opts)
+-- vim.keymap.set("n", "<leader>c'", chSurround_q, opts)
+-- vim.keymap.set("n", "<leader>c`", chSurround_I, opts)
+-- vim.keymap.set("n", "<leader>c[", chSurround_m, opts)
+-- vim.keymap.set("n", "<leader>c]", chSurround_m, opts)
+-- vim.keymap.set("n", "<leader>c<", chSurround_g, opts)
+-- vim.keymap.set("n", "<leader>c>", chSurround_g, opts)
