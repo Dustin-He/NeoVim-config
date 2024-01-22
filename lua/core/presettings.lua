@@ -26,14 +26,14 @@ vim.api.nvim_create_autocmd({"BufAdd", "BufEnter", "BufReadPre" }, {
                 })
             -- Plugins loading
             require("core.lazy")
-            -- Github Copilot
-            local function startCopilot()
-                vim.cmd[[
-                    Copilot auth
-                    Copilot enable
-                ]]
-            end
-            vim.api.nvim_create_user_command("StartCopilot", startCopilot, {})
+            -- -- Github Copilot
+            -- local function startCopilot()
+            --     vim.cmd[[
+            --         Copilot auth
+            --         Copilot enable
+            --     ]]
+            -- end
+            -- vim.api.nvim_create_user_command("StartCopilot", startCopilot, {})
             -- Nvim-tree
             local function open_nvim_tree(data)
                 -- buffer is a directory

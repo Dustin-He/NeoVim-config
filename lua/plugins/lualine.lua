@@ -37,7 +37,7 @@ local fileformat = {
     },
 }
 
-local macro = function ()
+local macro = function()
     local macroReg = vim.fn.reg_recording()
     if macroReg == "" then
         return ""
@@ -64,7 +64,7 @@ local lualine = { {
             lualine_a = { 'mode' },
             lualine_b = { 'branch', diff, 'diagnostics' },
             lualine_c = { "os.date('%c')" },
-            lualine_x = { macro, '%S', 'selectioncount', 'encoding', fileformat, 'filetype' },
+            lualine_x = { macro, '%S', 'selectioncount', 'copilot', 'encoding', fileformat, 'filetype' },
             lualine_y = { progress },
             lualine_z = { 'location' }
         },
