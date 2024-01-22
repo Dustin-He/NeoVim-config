@@ -153,6 +153,7 @@ local function getRefTitle(def_list)
     for _, item in ipairs(def_list['items']) do
         local p = "%.bib$"
         if string.match(item.filename, p) then
+            -- vim.print(item.filename)
             -- vim.cmd("e " .. item.filename)
             local buf = vim.fn.bufadd(item.filename)
             vim.fn.bufload(buf)
@@ -162,7 +163,8 @@ local function getRefTitle(def_list)
                 :next_named_sibling()
             while node ~= nil do
                 local text = vim.treesitter.get_node_text(node, buf)
-                p = "^title={"
+                -- vim.print(text)
+                p = "^title%s+=%s+{"
                 if string.match(text, p) then
                     title = vim.treesitter.get_node_text(node:named_child(1), buf)
                     break
@@ -185,6 +187,7 @@ local function searchRefScholar()
     vim.lsp.buf.definition({
         reuse_win = false,
         on_list = function(def_list)
+            -- vim.print(def_list)
             local title = getRefTitle(def_list)
             local opts = { fargs = {}, args = title }
             for i in string.gmatch(title, "%S+") do
