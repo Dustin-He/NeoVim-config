@@ -1,7 +1,9 @@
 local whichkey = {
     "folke/which-key.nvim",
-    event = "VeryLazy",
+    lazy = true,
+    -- event = "VeryLazy",
     enabled = true,
+    cmd = "WhichKey",
     init = function()
         vim.o.timeout = true
         vim.o.timeoutlen = 1000
@@ -23,7 +25,8 @@ local whichkey = {
             "z=",
         },
         disable = {
-            buftypes = { "nofile" }
+            buftypes = { "nofile" },
+            filetypes = {'vim'}
         }
     }
 }
