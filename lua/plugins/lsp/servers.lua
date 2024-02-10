@@ -17,6 +17,7 @@ M.server_names = {
     "jdtls",
     "jsonls",
     "vimls",
+    "bashls",
 }
 
 return M
