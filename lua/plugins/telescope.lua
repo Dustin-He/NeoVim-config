@@ -9,6 +9,15 @@ local telescope = { {
         vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Live grep" })
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Find bufers" })
         vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Find help tags" })
+        require("telescope").setup{
+            defaults = {
+                mappings = {
+                    n = {
+                        ["q"] = require("telescope.actions").close,
+                    },
+                }
+            }
+        }
         require("telescope").load_extension("noice")
     end
 } }
