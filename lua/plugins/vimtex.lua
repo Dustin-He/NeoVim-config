@@ -1,8 +1,8 @@
 local vimtex = {{
     "lervag/vimtex",
     -- version="*",
-    lazy = true,
-    ft = {"tex", "bib"},
+    -- lazy = true,
+    -- ft = {"tex", "bib"},
     init = function ()
         vim.cmd([[ 
             let g:vimtex_quickfix_mode = 0

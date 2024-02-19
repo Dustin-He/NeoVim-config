@@ -1,8 +1,8 @@
 local comment = { {
     "numToStr/Comment.nvim",
-    lazy = true,
+    -- lazy = true,
     version = "*",
-    keys = {"gc", "gb"},
+    -- keys = {"gc", "gb"},
     opts = {
     }
 } }
