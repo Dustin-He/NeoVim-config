@@ -164,7 +164,7 @@ local function getRefTitle(def_list)
             while node ~= nil do
                 local text = vim.treesitter.get_node_text(node, buf)
                 -- vim.print(text)
-                p = "^title%s+=%s+{"
+                p = "^title%s*=%s*{"
                 if string.match(text, p) then
                     title = vim.treesitter.get_node_text(node:named_child(1), buf)
                     break
