@@ -7,7 +7,7 @@ M.server_names = {
     "texlab",
     "html",
     "jsonls",
-    "tsserver",
+    "ts_ls",
     "lua_ls",
     "marksman",
     "pylsp",

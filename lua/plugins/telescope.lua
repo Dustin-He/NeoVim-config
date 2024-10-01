@@ -3,6 +3,7 @@ local telescope = { {
     branch = '0.1.x',
     dependencies = { { 'nvim-lua/plenary.nvim' }, },
     keys = {"<leader>ff", "<leader>fg", "<leader>fb", "<leader>fh"},
+    event = {"User AlphaReady"},
     config = function()
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Find files" })
