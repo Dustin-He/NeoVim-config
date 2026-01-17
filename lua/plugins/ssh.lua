@@ -51,7 +51,9 @@ local ssh = {
                     vim.g.lsp_on_attach(client, bufnr)
                 end
             end,
-            capabilities = vim.deepcopy(require('cmp_nvim_lsp').default_capabilities()),
+            -- capabilities = vim.deepcopy(require('cmp_nvim_lsp').default_capabilities()),
+            -- capabilities = vim.lsp.protocol.make_client_capabilities(),
+            capabilities = require('blink.cmp').get_lsp_capabilities(),
             -- filtetype_to_server = ftype_to_server,
             filetype_to_server = {
                 -- 根据你的需要配置

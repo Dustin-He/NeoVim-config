@@ -10,7 +10,8 @@ local nvim_lspconfig = {
             local servers_ok, servers = pcall(require, "plugins.lsp.servers")
             require("neodev").setup({})
             if servers_ok then
-                local cap_opts = { capabilities = vim.deepcopy(require('cmp_nvim_lsp').default_capabilities()) }
+                -- local cap_opts = { capabilities = vim.deepcopy(require('cmp_nvim_lsp').default_capabilities()) }
+                local cap_opts = { capabilities = vim.deepcopy(require('blink.cmp').get_lsp_capabilities()) }
                 for _, server in ipairs(servers.server_names) do
                     local settings_ok, settings = pcall(require, "plugins.lsp.languages." .. server)
                     if settings_ok then

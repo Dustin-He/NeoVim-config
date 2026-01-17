@@ -6,7 +6,7 @@ local copilot = {
         config = function()
             require("copilot").setup({
                 suggestion = {
-                    enabled = false,
+                    enabled = true,
                 },
                 panel = {
                     enabled = false,
@@ -25,14 +25,14 @@ local copilot = {
             })
         end,
     },
-    {
-        {
-            "zbirenbaum/copilot-cmp",
-            config = function()
-                require("copilot_cmp").setup()
-            end,
-        },
-    },
+    -- {
+        -- {
+        --     "zbirenbaum/copilot-cmp",
+        --     config = function()
+        --         require("copilot_cmp").setup()
+        --     end,
+        -- },
+    -- },
     {
         "AndreM222/copilot-lualine"
     }

@@ -49,7 +49,7 @@ local minuet = {
     },
     { 'nvim-lua/plenary.nvim' },
     -- optional, if you are using virtual-text frontend, nvim-cmp is not required.
-    { 'hrsh7th/nvim-cmp' },
+    --     -- { 'hrsh7th/nvim-cmp' },
 }
 
 return minuet
