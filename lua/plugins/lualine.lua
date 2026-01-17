@@ -1,3 +1,6 @@
+package.path = package.path .. ';' .. '/Users/dustin/.local/share/nvim/lazy/minuet-ai.nvim/lua/?.lua'
+package.path = package.path .. ';' .. '/Users/dustin/.local/share/nvim/lazy/lualine.nvim/lua/?.lua'
+
 -- cool function for progress
 local progress = function()
     local current_line = vim.fn.line(".")
@@ -45,7 +48,7 @@ local macro = function()
     return "@" .. macroReg
 end
 
-local lualine = {{
+local lualine = { {
     "nvim-lualine/lualine.nvim",
     version = "*",
     lazy = false, --用于Lazyvim中禁用内置插件
@@ -65,7 +68,7 @@ local lualine = {{
             lualine_a = { 'mode' },
             lualine_b = { 'branch', diff, 'diagnostics' },
             lualine_c = { "os.date('%c')" },
-            lualine_x = { macro, '%S', 'selectioncount', 'copilot', 'encoding', fileformat, 'filetype' },
+            lualine_x = { macro, '%S', 'selectioncount', {require('minuet.lualine')}, 'copilot', 'encoding', fileformat, 'filetype' },
             lualine_y = { progress },
             lualine_z = { 'location' }
         },
@@ -78,6 +81,7 @@ local lualine = {{
             lualine_z = {}
         },
     },
-} }
+},
+}
 
 return lualine
