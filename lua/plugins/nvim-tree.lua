@@ -7,8 +7,8 @@ local nvimtree = { {
         -- lazy = true
     },
     opts = {
-        hijack_netrw = true,
-        disable_netrw = true,
+        -- hijack_netrw = true,
+        -- disable_netrw = true,
         hijack_unnamed_buffer_when_opening = false,
         hijack_cursor = true,
         sync_root_with_cwd = true,

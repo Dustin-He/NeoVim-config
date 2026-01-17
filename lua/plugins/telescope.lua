@@ -1,9 +1,10 @@
 local telescope = { {
     'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
+    tag = 'v0.2.0',
     dependencies = { { 'nvim-lua/plenary.nvim' }, },
     keys = {"<leader>ff", "<leader>fg", "<leader>fb", "<leader>fh"},
     event = {"User AlphaReady"},
+    cond = (function() return not vim.g.vscode end),
     config = function()
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Find files" })

@@ -1,7 +1,8 @@
 local toggleterm = {{
     'akinsho/toggleterm.nvim',
     version = "*",
-    lazy = "true",
+    lazy = true,
+    cond = (function() return not vim.g.vscode end),
     opts = {
         open_mapping = [[<c-\>]],
         -- insert_mapping = true, -- normal mapping does not work if true

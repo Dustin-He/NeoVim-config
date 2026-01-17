@@ -10,22 +10,15 @@ vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter", "BufReadPre" }, {
         local largeFileSize = 1024 * 1024 * 1024
         local fileSize = vim.fn.getfsize(vim.fn.expand("<afile>"))
         if fileSize < largeFileSize then
-            -- Code folding
-            opt.foldmethod = "expr"
-            opt.foldexpr = "nvim_treesitter#foldexpr()"
-            local augroup_folding = vim.api.nvim_create_augroup("code_folding_cmds", { clear = true })
-            vim.api.nvim_create_autocmd(
-                { "TextYankPost", "TextChanged",
-                    "BufWinEnter", "VimEnter",
-                    "BufAdd", "BufRead", "FileReadPost" },
-                {
-                    pattern = "*",
-                    group = augroup_folding,
-                    command = "normal zR",
-                    -- nested = true
-                })
+            -- Code folding for nvim-ufo
+            vim.opt.foldlevel = 99
+            vim.opt.foldlevelstart = 99
+            vim.opt.foldcolumn = "1"
+            vim.opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+
             -- Plugins loading
             require("core.lazy")
+
             -- -- Github Copilot
             -- local function startCopilot()
             --     vim.cmd[[
@@ -34,6 +27,7 @@ vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter", "BufReadPre" }, {
             --     ]]
             -- end
             -- vim.api.nvim_create_user_command("StartCopilot", startCopilot, {})
+
             -- Nvim-tree
             local function open_nvim_tree(data)
                 -- buffer is a directory

@@ -3,8 +3,9 @@ local vimtex = {{
     -- version="*",
     -- lazy = true,
     -- ft = {"tex", "bib"},
+    cond = (function() return not vim.g.vscode end),
     init = function ()
-        vim.cmd([[ 
+        vim.cmd([[
             let g:vimtex_quickfix_mode = 0
             let g:tex_flavor = 'latex'
             let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'

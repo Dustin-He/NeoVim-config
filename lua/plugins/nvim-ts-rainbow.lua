@@ -1,5 +1,5 @@
 local nvim_ts_rainbow = {{
-    "p00f/nvim-ts-rainbow",
+    "HiPhish/rainbow-delimiters.nvim",
     lazy = false,
     -- opts = {}
 }}

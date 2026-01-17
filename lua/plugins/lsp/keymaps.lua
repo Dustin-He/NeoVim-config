@@ -4,8 +4,8 @@ M.set_keymaps = function()
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
     vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = "Diagnostic.open float" })
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Diagnostic.go to prev" })
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Diagnostic.go to next" })
+    vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.jump({count=-1, float=true})<CR>")
+    vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.jump({count=1, float=true})<CR>")
     vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, { desc = "Diagnostic.setloclist" })
     -- vim.keymap.set('n', '<space>h', vim.diagnostic.hide)
     -- vim.keymap.set('n', '<space>s', vim.diagnostic.show)

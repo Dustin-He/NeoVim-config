@@ -45,11 +45,12 @@ local macro = function()
     return "@" .. macroReg
 end
 
-local lualine = { {
+local lualine = {{
     "nvim-lualine/lualine.nvim",
     version = "*",
     lazy = false, --用于Lazyvim中禁用内置插件
-    dependencies = { { 'nvim-tree/nvim-web-devicons', lazy = true } },
+    dependencies = { { 'nvim-tree/nvim-web-devicons', lazy = true }, },
+    cond = (function() return not vim.g.vscode end),
     opts = {
         options = {
             icons_enabled = true,

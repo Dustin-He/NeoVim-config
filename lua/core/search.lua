@@ -166,7 +166,9 @@ local function getRefTitle(def_list)
                 -- vim.print(text)
                 p = "^title%s*=%s*{"
                 if string.match(text, p) then
-                    title = vim.treesitter.get_node_text(node:named_child(1), buf)
+                    -- title = vim.treesitter.get_node_text(node:named_child(1), buf)
+                    local first_child = node:named_child(1)
+                    title = first_child and vim.treesitter.get_node_text(first_child, buf) or ""
                     break
                 else
                     node = node:next_named_sibling()
@@ -222,12 +224,12 @@ local function baiduSearchKey(type, text, s, e)
     -- vim.print("baidu")
     if type == "char" then
         local joinedText = vim.fn.join(text, " ")
-        baiduSearch({args = joinedText})
+        baiduSearch({ args = joinedText })
     end
     -- Line
     if type == "line" then
         local joinedText = vim.fn.join(text, " ")
-        baiduSearch({args = joinedText})
+        baiduSearch({ args = joinedText })
     end
     -- Block
     if type == "block" then
@@ -240,12 +242,12 @@ local function googleSearchKey(type, text, s, e)
     -- Char
     if type == "char" then
         local joinedText = vim.fn.join(text, " ")
-        googleSearch({args = joinedText})
+        googleSearch({ args = joinedText })
     end
     -- Line
     if type == "line" then
         local joinedText = vim.fn.join(text, " ")
-        googleSearch({args = joinedText})
+        googleSearch({ args = joinedText })
     end
     -- Block
     if type == "block" then
@@ -254,59 +256,54 @@ local function googleSearchKey(type, text, s, e)
 end
 
 --- @diagnostic disable: unused-local
-local function scholarSearchKey(type, text, s, e)
-    -- Char
-    if type == "char" then
+local function scholarSearchKey(dataType, text, s, e)
+    if dataType == "char" or dataType == "line" then
         local wordList = {}
-        for _, v in ipairs(text) do
-            table.insert(wordList, vim.fn.split(v, '\\s'))
+        -- Process each line
+        for _, line in ipairs(text) do
+            if type(line) == "string" then
+                -- Split line into words
+                local words = vim.fn.split(line, '\\s')
+                -- Directly add words to wordList
+                for _, word in ipairs(words) do
+                    table.insert(wordList, word)
+                end
+            end
         end
-        wordList = vim.fn.flatten(wordList)
-        -- vim.print(wordList)
-        googleScholar({fargs = wordList})
-    end
-    -- Line
-    if type == "line" then
-        local wordList = {}
-        for _, v in ipairs(text) do
-            table.insert(wordList, vim.fn.split(v, '\\s'))
+        -- Call translate if we have words
+        if #wordList > 0 then
+            googleScholar({ fargs = wordList })
+        else
+            vim.print("No text to translate")
         end
-        wordList = vim.fn.flatten(wordList)
-        -- vim.print(wordList)
-        googleScholar({fargs = wordList})
-    end
-    -- Block
-    if type == "block" then
-        vim.print("Can not search with Block")
+    elseif dataType == "block" then
+        vim.print("Cannot translate block selection")
     end
 end
 
 --- @diagnostic disable: unused-local
-local function translateSearchKey(type, text, s, e)
-    -- Char
-    -- vim.print("translate")
-    if type == "char" then
+local function translateSearchKey(dataType, text, s, e)
+    if dataType == "char" or dataType == "line" then
         local wordList = {}
-        for _, v in ipairs(text) do
-            table.insert(wordList, vim.fn.split(v, '\\s'))
+        -- Process each line
+        for _, line in ipairs(text) do
+            if type(line) == "string" then
+                -- Split line into words
+                local words = vim.fn.split(line, '\\s')
+                -- Directly add words to wordList
+                for _, word in ipairs(words) do
+                    table.insert(wordList, word)
+                end
+            end
         end
-        wordList = vim.fn.flatten(wordList)
-        -- vim.print(wordList)
-        googleTranslate({fargs = wordList})
-    end
-    -- Line
-    if type == "line" then
-        local wordList = {}
-        for _, v in ipairs(text) do
-            table.insert(wordList, vim.fn.split(v, '\\s'))
+        -- Call translate if we have words
+        if #wordList > 0 then
+            googleTranslate({ fargs = wordList })
+        else
+            vim.print("No text to translate")
         end
-        wordList = vim.fn.flatten(wordList)
-        -- vim.print(wordList)
-        googleTranslate({fargs = wordList})
-    end
-    -- Block
-    if type == "block" then
-        vim.print("Can not search with Block")
+    elseif dataType == "block" then
+        vim.print("Cannot translate block selection")
     end
 end
 
@@ -314,4 +311,3 @@ require("core.operator").CreateOperators({ "n", "v" }, "gsb", baiduSearchKey, tr
 require("core.operator").CreateOperators({ "n", "v" }, "gsg", googleSearchKey, true, false, "Search with Google")
 require("core.operator").CreateOperators({ "n", "v" }, "gss", scholarSearchKey, true, false, "Search with Google Scholar")
 require("core.operator").CreateOperators({ "n", "v" }, "gst", translateSearchKey, true, false, "Google translate")
-

@@ -1,7 +1,8 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local opt = vim.opt
 
-if not vim.loop.fs_stat(lazypath) then
+-- if not vim.uv.fs_stat(lazypath) then
+if vim.fn.isdirectory(lazypath) == 0 then
     vim.fn.system({
         "git",
         "clone",
@@ -46,7 +47,7 @@ lazy.setup({
         reset_packpath = true,                                                  -- reset the package path to improve startup time
         rtp = {
             reset = false,                                                      -- reset the runtime path to $VIMRUNTIME and your config directory
-            paths = { '/opt/homebrew/Cellar/neovim/0.9.4/share/nvim/runtime' }, -- add any custom paths here that you want to includes in the rtp
+            paths = { '/opt/homebrew/Cellar/neovim/0.11.5_1/share/nvim/runtime' }, -- add any custom paths here that you want to includes in the rtp
             disabled_plugins = {
                 -- "gzip",
                 -- "matchit",

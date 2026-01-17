@@ -1,7 +1,7 @@
 local opts = { noremap = true, silent = true }
 
 -- local keymap = vim.keymap
-local keymap = vim.api.nvim_set_keymap
+-- local keymap = vim.api.nvim_set_keymap
 
 local function addSurround(l, r)
     --- @diagnostic disable: unused-local
@@ -54,12 +54,16 @@ local function getSurround()
     end
     -- local surroundList = { "(", ")", "[", "]", "{", "}", "'", "\"", "<", ">", "`"}
     local surroundList = { "(", ")", "[", "]", "{", "}" }
-    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+    -- local cursor = vim.api.nvim_win_get_cursor(0)
+    -- local row, col = cursor[1], cursor[2]
+    --- @diagnostic disable-next-line: deprecated
+    table.unpack = table.unpack or unpack
+    local row, col = table.unpack(vim.api.nvim_win_get_cursor(0))
     local curChar = vim.fn.getline(row):sub(col + 1, col + 1)
     local id = findItem(surroundList, curChar)
     if id ~= 0 then
         vim.cmd [[normal! mm%]]
-        local row2, col2 = unpack(vim.api.nvim_win_get_cursor(0))
+        local row2, col2 = table.unpack(vim.api.nvim_win_get_cursor(0))
         vim.cmd [[normal! `m]]
         if row < row2 or (row == row2 and col < col2) then
             return { 1, curChar }

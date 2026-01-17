@@ -1,4 +1,7 @@
 return {
+    cmd = {
+        "/Users/dustin/miniconda3/bin/pylsp"
+    },
     settings = {
         pylsp = {
             plugins = {
@@ -10,20 +13,22 @@ return {
                 mccabe = {
                     enabled = false,
                 },
-                pyflakes = {
-                    enabled = false,
-                },
                 rope_completion = {
                     enabled = false,
                 },
                 autopep8 = {
-                    enabled = false,
+                    enabled = true,
                 },
                 yapf = {
+                    enabled = false,
+                },
+                pylint = {
                     enabled = true,
+                    args = { "--disable=C,W1514,R1732",
+                        "--load-plugins=pylint.extensions.check_elif,pylint.extensions.empty_comment,pylint.extensions.redefined_variable_type,pylint.extensions.redefined_loop_name,pylint.extensions.typing,pylint.extensions.mccabe" },
                 },
                 flake8 = {
-                    enabled = true,
+                    enabled = false,
                     ignore = {
                         "E501",
                         "F401"
@@ -36,7 +41,10 @@ return {
                         "__init__.py:E128",
                     }
                 },
-            }
+                pyflakes = {
+                    enabled = false,
+                },
+            },
         }
     }
 }

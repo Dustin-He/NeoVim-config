@@ -105,14 +105,20 @@ end
 
 -- Function to crate the operator
 function M.CreateOperators(mode, mapping, func, linewise, changable, des)
-    vim.validate({
-        mode = { mode, { "string", "table" } },
-        mapping = { mapping, "string" },
-        func = { func, "function" },
-        linewise = { linewise, "boolean" },
-        changable = { changable, "boolean" },
-        des = { des, "string" },
-    })
+    -- vim.validate({
+    --     mode = { mode, { "string", "table" } },
+    --     mapping = { mapping, "string" },
+    --     func = { func, "function" },
+    --     linewise = { linewise, "boolean" },
+    --     changable = { changable, "boolean" },
+    --     des = { des, "string" },
+    -- })
+    vim.validate("mode", mode, "table")
+    vim.validate("mapping", mapping, "string")
+    vim.validate("func", func, "function")
+    vim.validate("linewise", linewise, "boolean")
+    vim.validate("changable", changable, "boolean")
+    vim.validate("des", des, "string")
     -- Default value of nvim
     vim.o.selection = "inclusive"
     -- Add description for the keymap

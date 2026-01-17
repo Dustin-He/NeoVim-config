@@ -8,6 +8,7 @@ local mason_lspconfig = {{
     'williamboman/mason-lspconfig.nvim',
     version = "*",
     lazy = false,
+    cond = (function() return not vim.g.vscode end),
     opts = {
         ensure_installed = servers.server_names
     }

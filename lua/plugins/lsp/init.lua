@@ -5,8 +5,8 @@ local nvim_lspconfig = {
     {
         "neovim/nvim-lspconfig",
         lazy = false,
+        cond = (function() return not vim.g.vscode end),
         config = function()
-            local lspconfig = require("lspconfig")
             local servers_ok, servers = pcall(require, "plugins.lsp.servers")
             require("neodev").setup({})
             if servers_ok then
@@ -18,21 +18,46 @@ local nvim_lspconfig = {
                     else
                         settings = vim.tbl_deep_extend("force", cap_opts, {})
                     end
-                    lspconfig[server].setup(settings)
+                    vim.lsp.config(server, settings)
+                    -- vim.lsp.enable(server)
                 end
             else
                 print("No servers found\n")
             end
 
+            -- Deprecated way of defining diagnostic signs
             local diagnostic_signs = {
                 { name = "DiagnosticSignError", text = "" },
                 { name = "DiagnosticSignWarn", text = "" },
-                { name = "DiagnosticSignHint", text = "" },
+                { name = "DiagnosticSignHint", text = "󰌵" },
                 { name = "DiagnosticSignInfo", text = "" },
             }
-            for _, sign in ipairs(diagnostic_signs) do
-                vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-            end
+            -- for _, sign in ipairs(diagnostic_signs) do
+            --     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+            -- end
+            -- vim.diagnostic.config({
+            --     signs = {
+            --         text = {
+            --             [vim.diagnostic.severity.ERROR] = "",
+            --             [vim.diagnostic.severity.WARN] = "",
+            --             [vim.diagnostic.severity.HINT] = "󰌵",
+            --             [vim.diagnostic.severity.INFO] = "",
+            --         },
+            --         texthl = {
+            --             [vim.diagnostic.severity.ERROR] = "Error",
+            --             [vim.diagnostic.severity.WARN] = "Warn",
+            --             [vim.diagnostic.severity.HINT] = "Hint",
+            --             [vim.diagnostic.severity.INFO] = "Info",
+            --         },
+            --         numhl = {
+            --             [vim.diagnostic.severity.ERROR] = "",
+            --             [vim.diagnostic.severity.WARN] = "",
+            --             [vim.diagnostic.severity.INFO] = "",
+            --             [vim.diagnostic.severity.HINT] = "",
+            --         },
+            --     },
+            -- })
+
             local diagnostic_config = {
                 -- disable virtual text
                 virtual_text = false,
@@ -64,26 +89,3 @@ local nvim_lspconfig = {
     } }
 
 return nvim_lspconfig
-
--- if server == 'clangd' then
---     lspconfig.util.on_setup = lspconfig.util.add_hook_before(lspconfig.util.on_setup, function(config)
---         if config.name == "clangd" then
---             -- local custom_server_prefix = "/Users/hejintao/.local/share/nvim/mason"
---             local custom_server_prefix = "/opt/homebrew/opt/llvm/"
---             -- local custom_server_prefix = "/usr"
---             config.cmd = { custom_server_prefix .. "/bin/clangd",
---                 "--header-insertion=never",
---                 "--query-driver=/opt/homebrew/opt/llvm/bin/clang",
---                 -- "--query-driver=/usr/bin/clang",
---                 "--all-scopes-completion",
---                 "--completion-style=detailed",
---                 -- "--log=verbose",
---             }
---             -- config.init_options = {
---             --     -- fallbackFlags = {
---             --     --     "-std=c++20",
---             --     -- }
---             -- }
---         end
---     end)
--- end

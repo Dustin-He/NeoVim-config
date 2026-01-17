@@ -1,6 +1,7 @@
 local noice = { {
     "folke/noice.nvim",
     event = "VeryLazy",
+    cond = (function() return not vim.g.vscode end),
     opts = {
         -- add any options here
         lsp = {

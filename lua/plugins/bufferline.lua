@@ -2,6 +2,7 @@ local bufferline = { {
     "akinsho/bufferline.nvim",
     lazy = false,
     dependencies = { 'catppuccin', 'nvim-tree/nvim-web-devicons' },
+    cond = (function() return not vim.g.vscode end),
     -- version = "*",
     -- ft = "alpha",
     event = "VeryLazy",
@@ -70,7 +71,8 @@ local bufferline = { {
                 show_buffer_close_icons = true,
                 close_command = "BufDel", -- can be a string | function, | false see "Mouse actions"
             },
-            highlights = require("catppuccin.groups.integrations.bufferline").get()
+            -- highlights = require("catppuccin.groups.integrations.bufferline").get_theme()
+            highlights = require("catppuccin.special.bufferline").get_theme()
 
         })
     end,

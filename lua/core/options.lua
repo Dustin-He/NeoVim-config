@@ -78,9 +78,11 @@ opt.showcmd = true
 opt.showcmdloc = 'statusline'
 
 -- Spell Check
-opt.spell = true
-opt.spellfile:append("/Users/dustin/.local/share/nvim/lazy/lazy.nvim/spell/en.utf-8.add")
-opt.spelllang = {"en"}
+if not vim.g.vscode then
+    opt.spell = true
+    opt.spellfile:append("/Users/dustin/.local/share/nvim/lazy/lazy.nvim/spell/en.utf-8.add")
+    opt.spelllang = {"en"}
+end
 
 -- Hide the annoying complete messages
 opt.shortmess:append "c"
@@ -91,11 +93,19 @@ vim.cmd "set whichwrap+=<,>,[,],h,l"
 -- "-" is part of a word
 vim.cmd [[set iskeyword+=-]]
 
--- Doesn't work in lua, but works in cmd
+-- Doesn't work in lua, but works in cmd, put it in presettings.lua
 -- vim.cmd [[set formatoptions-=cro]]
 
 -- Language
-vim.api.nvim_exec('language time en_US.UTF-8', true)
+-- vim.api.nvim_exec('language time en_US.UTF-8', true)
+vim.cmd('language time en_US.UTF-8')
 
 vim.g.python3_host_prog = "/usr/bin/python3"
 
+vim.g.editorconfig = false
+
+-- -- Disable deprecated warning
+-- vim.deprecate = function() end
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1

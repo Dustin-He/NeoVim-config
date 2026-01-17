@@ -3,7 +3,6 @@ local nvim_cmp = {
         "hrsh7th/nvim-cmp",
         -- load cmp on InsertEnter
         event = "InsertEnter",
-        lazy = false,
         -- these dependencies will only be loaded when cmp loads
         -- dependencies are always lazy-loaded unless specified otherwise
         dependencies = {
@@ -16,10 +15,6 @@ local nvim_cmp = {
             'onsails/lspkind-nvim',
         },
         config = function()
-            local lspkind_status_ok, lspkind = pcall(require, "lspkind")
-            if not lspkind_status_ok then
-                return
-            end
             local cmp_status_ok, cmp = pcall(require, "cmp")
             if not cmp_status_ok then
                 return
@@ -29,36 +24,40 @@ local nvim_cmp = {
                 return
             end
 
-            lspkind.init({
-                symbol_map = {
-                    Text = "󰉿",
-                    Method = "󰆧",
-                    Function = "󰊕",
-                    Constructor = "",
-                    Field = "󰜢",
-                    Variable = "󰀫",
-                    Class = "󰠱",
-                    Interface = "",
-                    Module = "",
-                    Property = "󰜢",
-                    Unit = "󰑭",
-                    Value = "󰎠",
-                    Enum = "",
-                    Keyword = "󰌋",
-                    Snippet = "",
-                    Color = "󰏘",
-                    File = "󰈙",
-                    Reference = "󰈇",
-                    Folder = "󰉋",
-                    EnumMember = "",
-                    Constant = "󰏿",
-                    Struct = "󰙅",
-                    Event = "",
-                    Operator = "󰆕",
-                    TypeParameter = "",
-                    Copilot = ""
-                },
-            })
+            local kind_symbol = {
+                Text = "󰉿",
+                Method = "󰆧",
+                Function = "󰊕",
+                Constructor = "",
+                Field = "󰜢",
+                Variable = "󰀫",
+                Class = "󰠱",
+                Interface = "",
+                Module = "",
+                Property = "󰜢",
+                Unit = "󰑭",
+                Value = "󰎠",
+                Enum = "",
+                Keyword = "󰌋",
+                Snippet = "",
+                Color = "󰏘",
+                File = "󰈙",
+                Reference = "󰈇",
+                Folder = "󰉋",
+                EnumMember = "",
+                Constant = "󰏿",
+                Struct = "󰙅",
+                Event = "",
+                Operator = "󰆕",
+                TypeParameter = "󰅲",
+                Copilot = "",
+            }
+
+            -- lspkind.init({ symbol_map = kind_symbol, })
+
+            vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+            -- vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#282C34", fg = "NONE" })
+            -- vim.api.nvim_set_hl(0, "Pmenu", { fg = "#C5CDD9", bg = "#22252A" })
 
             local local_mapping = {
                 -- 上一个
@@ -115,33 +114,52 @@ local nvim_cmp = {
                 },
                 -- 来源
                 sources = cmp.config.sources({
+                        { name = 'minuet' },
                         { name = 'copilot' },
                         { name = 'nvim_lsp' },
-                        { name = "nvim_lua" },                 -- For luasnip users.
+                        { name = 'nvim_lua' },                 -- For luasnip users.
                         { name = 'luasnip' } },
                     { { name = 'buffer' }, { name = 'path' } } -- no cmdline
                 ),
+                performance = {
+                    fetching_timeout = 2000,
+                },
 
                 -- 快捷键
                 -- mapping = require'keybindings'.cmp(cmp),
                 mapping = cmp.mapping.preset.insert(local_mapping),
 
 
-                -- 使用lspkind-nvim显示类型图标
-                --- @diagnostic disable:missing-fields
-                formatting = {
-                    format = lspkind.cmp_format({
-                        with_text = true, -- do not show text alongside icons
-                        maxwidth = 50,    -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-                        before = function(entry, vim_item)
-                            -- Source 显示提示来源
-                            vim_item.menu = "[" .. string.upper(entry.source.name) .. "]"
-                            return vim_item
-                        end
-                    })
-                },
+                -- window = {
+                --     documentation = cmp.config.window.bordered(),
+                -- },
                 window = {
-                    documentation = cmp.config.window.bordered(),
+                    completion = {
+                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                        -- col_offset = -3,
+                        side_padding = 0,
+                    },
+                    -- Transparent documentation
+                    documentation = cmp.config.window.bordered()
+                },
+                formatting = {
+                    fields = { "abbr", "kind", "menu" },
+                    format = function(entry, vim_item)
+                        local custom_menu_icon = {
+                            minuet = "󱚦",
+                        }
+                        vim_item.kind = string.format('%s %s', kind_symbol[vim_item.kind], vim_item.kind)
+                        local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry,
+                            vim_item)
+                        local strings = vim.split(kind.kind, "%s", { trimempty = true })
+                        kind.kind = " " .. (strings[1] or "") .. " " .. strings[2]
+                        kind.menu = "    [" .. (string.upper(entry.source.name) or "") .. "]"
+                        if entry.source.name == "minuet" then
+                            kind.kind = " " .. (custom_menu_icon["minuet"] or "") .. " " .. string.upper(strings[2])
+                        end
+
+                        return kind
+                    end,
                 },
                 experimental = {
                     ghost_text = false,
