@@ -13,6 +13,7 @@ local minuet = {
                 -- power. Once you have a reliable estimate of your local computing power,
                 -- you should adjust the context window to a larger value.
                 context_window = 4096,
+                request_timeout = 10,
                 provider_options = {
                     openai_fim_compatible = {
                         -- openai_compatible = {
@@ -24,18 +25,18 @@ local minuet = {
                         end_point = 'https://dashscope.aliyuncs.com/compatible-mode/v1/completions',
                         api_key = 'DASHSCOPE_API_KEY',
                         name = 'Qwen',
-                        stream = true,
+                        stream = false,
                         optional = {
                             max_tokens = 8192,
                             top_p = 0.9,
                             -- stop = {'\n\n'},
                         },
                         template = {
-                            -- prompt = function(context_before_cursor, context_after_cursor, opts)
-                            --     local str = "<|fim_prefix|>" ..
-                            --         context_before_cursor .. "<|fim_suffix|>" .. context_after_cursor .. "<|fim_middle|>"
-                            --     return str
-                            -- end,
+                            prompt = function(context_before_cursor, context_after_cursor, opts)
+                                local str = "<|fim_prefix|>" ..
+                                    context_before_cursor .. "<|fim_suffix|>" .. context_after_cursor .. "<|fim_middle|>"
+                                return str
+                            end,
                             -- suffix = function(context_before_cursor, context_after_cursor, opts)
                             --     return
                             --         context_after_cursor
