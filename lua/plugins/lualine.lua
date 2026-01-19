@@ -83,6 +83,7 @@ local lualine = {
             },
         },
         config = function(_, opts)
+            -- Minuet AI status updater for lualine
             local minuet_lualine = require('minuet.lualine')
             local function setup_global_status()
                 vim.g.minuet_processing = false

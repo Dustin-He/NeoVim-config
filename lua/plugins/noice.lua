@@ -29,7 +29,12 @@ local noice = { {
         },
         routes = {
             {
-                filter = { warning = true, find = "Request timed out." },
+                filter = {
+                    any = {
+                        { find = "^[✓💾].-'([^']+)'.*$" },
+                        { warning = true, find = "^Request timed out" },
+                    },
+                },
                 opts = { skip = true },
             },
         },

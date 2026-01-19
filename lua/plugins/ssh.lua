@@ -34,10 +34,10 @@ local ssh = {
         -- else
         --     print("No servers found\n")
         -- end
-        local settings_ok, pylsp_settings = pcall(require, "plugins.lsp.languages.pylsp")
-        if not settings_ok then
-            print("No pylsp settings found\n")
-        end
+        -- local settings_ok, pylsp_settings = pcall(require, "plugins.lsp.languages.pylsp")
+        -- if not settings_ok then
+        --     print("No pylsp settings found\n")
+        -- end
 
         require('remote-ssh').setup({
             on_attach = function(client, bufnr)
@@ -71,52 +71,12 @@ local ssh = {
                 -- bash = "bashls"
             },
             server_configs = {
-                pylsp = {
-                    plugins = {
-                        pycodestyle = {
-                            enabled = false,
-                            ignore = { 'E501' },
-                            maxLineLength = 250
-                        },
-                        mccabe = {
-                            enabled = false,
-                        },
-                        pyflakes = {
-                            enabled = false,
-                        },
-                        rope_completion = {
-                            enabled = false,
-                        },
-                        autopep8 = {
-                            enabled = false,
-                        },
-                        yapf = {
-                            enabled = true,
-                        },
-                        flake8 = {
-                            enabled = true,
-                            ignore = {
-                                "E501",
-                                "F401"
-                            },
-                            perFileIgnores = {
-                                "__init__.py:F403",
-                                "__init__.py:F405",
-                                "__init__.py:E121",
-                                "__init__.py:E126",
-                                "__init__.py:E128",
-                            }
-                        },
-                    },
-                },
                 clangd = {
-                    filetypes = { "c", "cpp", "objc", "objcpp" },
-                    root_patterns = { ".git", "compile_commands.json" },
-                    init_options = {
-                        usePlaceholders = true,
-                        completeUnimported = false
-                    }
+                    init_options = require('plugins.lsp.languages.clangd').init_options
                 },
+                pylsp = {
+                    init_options = require('plugins.lsp.languages.pylsp').settings
+                }
             },
             -- Async write configuration
             async_write_opts = {

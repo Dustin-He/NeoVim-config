@@ -38,8 +38,8 @@ local blink = {
             ['<Down>'] = { 'select_next', 'fallback' },
             ['<C-j>'] = { 'select_next', 'fallback' },
             ['<C-k>'] = { 'select_prev', 'fallback' },
-            ['<C-u>'] = {function(cmp) return cmp.select_prev({ count = 5 }) end},
-            ['<C-d>'] = {function(cmp) return cmp.select_next({ count = 5 }) end},
+            ['<C-u>'] = { function(cmp) return cmp.select_prev({ count = 5 }) end },
+            ['<C-d>'] = { function(cmp) return cmp.select_next({ count = 5 }) end },
             -- disable a keymap from the preset
             ['<M-,>'] = { 'hide' }, -- or {}
             -- show with a list of providers
@@ -58,6 +58,12 @@ local blink = {
 
         -- (Default) Only show the documentation popup when manually triggered
         completion = {
+            trigger = {
+                -- When true, will show completion window after backspacing
+                show_on_backspace = true,
+                -- When true, will show completion window after backspacing into a keyword
+                show_on_backspace_in_keyword = true,
+            },
             documentation = {
                 auto_show = true,
                 window = {
@@ -126,6 +132,8 @@ local blink = {
                 },
             }
         },
+
+        snippets = { preset = 'luasnip',},
 
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`

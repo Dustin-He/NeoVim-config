@@ -6,7 +6,7 @@ local copilot = {
         config = function()
             require("copilot").setup({
                 suggestion = {
-                    enabled = true,
+                    enabled = false,
                 },
                 panel = {
                     enabled = false,
@@ -21,7 +21,6 @@ local copilot = {
                         }
                     },
                 },
-                copilot_model = "gpt-4o",
             })
         end,
     },
