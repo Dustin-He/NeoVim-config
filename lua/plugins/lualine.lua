@@ -1,4 +1,3 @@
-package.path = package.path .. ';' .. '/Users/dustin/.local/share/nvim/lazy/minuet-ai.nvim/lua/?.lua'
 package.path = package.path .. ';' .. '/Users/dustin/.local/share/nvim/lazy/lualine.nvim/lua/?.lua'
 
 -- cool function for progress
