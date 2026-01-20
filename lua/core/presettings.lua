@@ -14,6 +14,7 @@ vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter", "BufReadPre" }, {
             vim.opt.foldlevel = 99
             vim.opt.foldlevelstart = 99
             vim.opt.foldcolumn = "1"
+            vim.o.foldenable = true
             vim.opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
             -- Plugins loading
@@ -83,17 +84,16 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 
 -- Blink and copilot
 vim.api.nvim_create_autocmd('User', {
-  pattern = 'BlinkCmpMenuOpen',
-  callback = function()
-    require("copilot.suggestion").dismiss()
-    vim.b.copilot_suggestion_hidden = true
-  end,
+    pattern = 'BlinkCmpMenuOpen',
+    callback = function()
+        require("copilot.suggestion").dismiss()
+        vim.b.copilot_suggestion_hidden = true
+    end,
 })
 
 vim.api.nvim_create_autocmd('User', {
-  pattern = 'BlinkCmpMenuClose',
-  callback = function()
-    vim.b.copilot_suggestion_hidden = false
-  end,
+    pattern = 'BlinkCmpMenuClose',
+    callback = function()
+        vim.b.copilot_suggestion_hidden = false
+    end,
 })
-
