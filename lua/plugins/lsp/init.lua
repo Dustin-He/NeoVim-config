@@ -26,59 +26,25 @@ local nvim_lspconfig = {
                 print("No servers found\n")
             end
 
-            -- Deprecated way of defining diagnostic signs
-            local diagnostic_signs = {
-                { name = "DiagnosticSignError", text = "" },
-                { name = "DiagnosticSignWarn", text = "" },
-                { name = "DiagnosticSignHint", text = "󰌵" },
-                { name = "DiagnosticSignInfo", text = "" },
-            }
-            -- for _, sign in ipairs(diagnostic_signs) do
-            --     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-            -- end
-            -- vim.diagnostic.config({
-            --     signs = {
-            --         text = {
-            --             [vim.diagnostic.severity.ERROR] = "",
-            --             [vim.diagnostic.severity.WARN] = "",
-            --             [vim.diagnostic.severity.HINT] = "󰌵",
-            --             [vim.diagnostic.severity.INFO] = "",
-            --         },
-            --         texthl = {
-            --             [vim.diagnostic.severity.ERROR] = "Error",
-            --             [vim.diagnostic.severity.WARN] = "Warn",
-            --             [vim.diagnostic.severity.HINT] = "Hint",
-            --             [vim.diagnostic.severity.INFO] = "Info",
-            --         },
-            --         numhl = {
-            --             [vim.diagnostic.severity.ERROR] = "",
-            --             [vim.diagnostic.severity.WARN] = "",
-            --             [vim.diagnostic.severity.INFO] = "",
-            --             [vim.diagnostic.severity.HINT] = "",
-            --         },
-            --     },
-            -- })
-
-            local diagnostic_config = {
-                -- disable virtual text
-                virtual_text = false,
-                -- show signs
+            vim.diagnostic.config({
                 signs = {
-                    active = diagnostic_signs,
+                    active = true,
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "",
+                        [vim.diagnostic.severity.WARN]  = "",
+                        [vim.diagnostic.severity.HINT]  = "󰌵",
+                        [vim.diagnostic.severity.INFO]  = "",
+                    },
                 },
+                virtual_text = false,
                 update_in_insert = true,
-                underline = true,
+                underline = false,
                 severity_sort = true,
                 float = {
                     focusable = false,
-                    style = "minimal",
                     border = "rounded",
-                    source = "always",
-                    header = "",
-                    prefix = "",
                 },
-            }
-            vim.diagnostic.config(diagnostic_config)
+            })
 
             local keymaps_ok, keymaps = pcall(require, "plugins.lsp.keymaps")
             if not keymaps_ok then
