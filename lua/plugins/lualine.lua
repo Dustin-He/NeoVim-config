@@ -129,7 +129,8 @@ local lualine = {
             minuet_lualine.update_status = function()
                 if vim.g.minuet_processing then
                     vim.g.spinner_index = (vim.g.spinner_index % vim.g.spinner_symbols_len) + 1
-                    local request = string.format('%s (%s/%s)', vim.g.spinner_symbols[vim.g.spinner_index], vim.g.minuet_n_finished + 1,
+                    local request = string.format('%s (%s/%s)', vim.g.spinner_symbols[vim.g.spinner_index],
+                        vim.g.minuet_n_finished + 1,
                         vim.g.minuet_n_requests)
                     return request
                 else
