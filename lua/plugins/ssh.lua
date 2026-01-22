@@ -1,6 +1,7 @@
 local ssh = {
     "inhesrom/remote-ssh.nvim",
-    branch = "master",
+    --branch = "master",
+    branch = "on-list-nvim-11.5-fix",
     dependencies = {
         "inhesrom/telescope-remote-buffer", --See https://github.com/inhesrom/telescope-remote-buffer for features
         "nvim-telescope/telescope.nvim",
