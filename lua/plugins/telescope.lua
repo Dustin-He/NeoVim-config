@@ -1,9 +1,9 @@
 local telescope = { {
     'nvim-telescope/telescope.nvim',
     tag = 'v0.2.0',
-    dependencies = { { 'nvim-lua/plenary.nvim' }, },
-    keys = {"<leader>ff", "<leader>fg", "<leader>fb", "<leader>fh"},
-    event = {"User AlphaReady"},
+    dependencies = { { 'nvim-lua/plenary.nvim' }, {'nvim-telescope/telescope-ui-select.nvim'}},
+    keys = { "<leader>ff", "<leader>fg", "<leader>fb", "<leader>fh" },
+    event = { "User AlphaReady" },
     cond = (function() return not vim.g.vscode end),
     config = function()
         local builtin = require('telescope.builtin')
@@ -11,16 +11,26 @@ local telescope = { {
         vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Live grep" })
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Find bufers" })
         vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Find help tags" })
-        require("telescope").setup{
+        require("telescope").setup {
             defaults = {
                 mappings = {
                     n = {
                         ["q"] = require("telescope.actions").close,
                     },
                 }
+            },
+            extensions = {
+                ['ui-select'] = {
+                    -- Optional: add your configuration for the UI here
+                    layout_config = {
+                        height = 0.5,
+                        width = 0.5,
+                    },
+                },
             }
         }
         require("telescope").load_extension("noice")
+        require('telescope').load_extension('ui-select')
     end
 } }
 
