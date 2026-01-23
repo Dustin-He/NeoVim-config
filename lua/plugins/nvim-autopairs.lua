@@ -1,6 +1,6 @@
 local nvimautopairs = {{
     "windwp/nvim-autopairs",
-    lazy = false,
+    lazy = true,
     version = "*",
     event = "InsertEnter",
     opts = {

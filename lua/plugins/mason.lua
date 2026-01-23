@@ -1,7 +1,6 @@
 local mason = {{
     "williamboman/mason.nvim",
     version = "*",
-    lazy = false,
     cond = (function() return not vim.g.vscode end),
     opts = {
         log_level = vim.log.levels.DEBUG,

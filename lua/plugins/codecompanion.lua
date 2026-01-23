@@ -5,6 +5,12 @@ local codecompanion = {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
     },
+    cmd = {
+        "CodeCompanion",
+        "CodeCompanionActions",
+        "CodeCompanionChat",
+        "CodeCompanionCmd",
+    },
     opts = {
         interactions = {
             chat = {
