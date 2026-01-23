@@ -65,11 +65,11 @@ local bufferline = { {
                     style = 'icon',
                 },
                 numbers = "both",
-                separator_style = "thick",
+                separator_style = "thin",
                 -- show_tab_indicators = true,
                 show_buffer_icons = true,
                 show_buffer_close_icons = true,
-                close_command = "BufDel", -- can be a string | function, | false see "Mouse actions"
+                close_command = "BufDel %d", -- can be a string | function, | false see "Mouse actions"
             },
             -- highlights = require("catppuccin.groups.integrations.bufferline").get_theme()
             highlights = require("catppuccin.special.bufferline").get_theme()
