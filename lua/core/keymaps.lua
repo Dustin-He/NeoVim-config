@@ -59,6 +59,8 @@ keymap("n", "B", "5b", opts)
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 -- Bufferline
 keymap("n", "<leader><tab>", ":BufDel<CR>", opts)
+keymap("n", "<leader>b", ":BufferLinePick<CR>", opts)
+keymap("n", "<leader>B", ":BufferLinePickClose<CR>", opts)
 -- ToggleTerm
 keymap("n", "<leader>t", ":ToggleTerm direction=float<CR>", opts)
 -- LazyGit
@@ -89,3 +91,8 @@ end
 vim.keymap.set("n", "gx", function()
     open_external(vim.fn.expand("<cfile>"))
 end)
+
+-- CodeCompanion
+vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+vim.keymap.set({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
