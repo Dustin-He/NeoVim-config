@@ -1,14 +1,14 @@
 local nvim_lspconfig = {
-    {
-        "folke/neodev.nvim",
-    },
+    -- {
+    --     "folke/neodev.nvim",
+    -- },
     {
         "neovim/nvim-lspconfig",
         lazy = false,
         cond = (function() return not vim.g.vscode end),
         config = function()
             local servers_ok, servers = pcall(require, "plugins.lsp.servers")
-            require("neodev").setup({})
+            -- require("neodev").setup({})
             if servers_ok then
                 -- local cap_opts = { capabilities = vim.deepcopy(require('cmp_nvim_lsp').default_capabilities()) }
                 local cap_opts = { capabilities = vim.deepcopy(require('blink.cmp').get_lsp_capabilities()) }

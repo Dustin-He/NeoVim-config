@@ -13,6 +13,9 @@ return {
                 mccabe = {
                     enabled = false,
                 },
+                ruff = {
+                    enabled = false,
+                },
                 rope_completion = {
                     enabled = false,
                 },

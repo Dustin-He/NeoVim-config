@@ -3,7 +3,6 @@ local whichkey = {
     lazy = true,
     event = "VeryLazy",
     dependencies = {{"echasnovski/mini.icons", version = false}},
-    -- enabled = true,
     cmd = "WhichKey",
     -- init = function()
     --     vim.o.timeout = true

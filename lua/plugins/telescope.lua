@@ -32,6 +32,8 @@ local telescope = { {
         require("telescope").load_extension("noice")
         require('telescope').load_extension('ui-select')
     end
-} }
+},
+{'nvim-telescope/telescope-ui-select.nvim'}
+}
 
 return telescope
