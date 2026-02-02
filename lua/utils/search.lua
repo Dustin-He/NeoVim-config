@@ -307,7 +307,7 @@ local function translateSearchKey(dataType, text, s, e)
     end
 end
 
-require("core.operator").CreateOperators({ "n", "v" }, "gsb", baiduSearchKey, true, false, "Search with Baidu")
-require("core.operator").CreateOperators({ "n", "v" }, "gsg", googleSearchKey, true, false, "Search with Google")
-require("core.operator").CreateOperators({ "n", "v" }, "gss", scholarSearchKey, true, false, "Search with Google Scholar")
-require("core.operator").CreateOperators({ "n", "v" }, "gst", translateSearchKey, true, false, "Google translate")
+require("utils.operator").CreateOperators({ "n", "v" }, "gsb", baiduSearchKey, true, false, "Search with Baidu")
+require("utils.operator").CreateOperators({ "n", "v" }, "gsg", googleSearchKey, true, false, "Search with Google")
+require("utils.operator").CreateOperators({ "n", "v" }, "gss", scholarSearchKey, true, false, "Search with Google Scholar")
+require("utils.operator").CreateOperators({ "n", "v" }, "gst", translateSearchKey, true, false, "Google translate")

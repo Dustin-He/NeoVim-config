@@ -1,27 +1,23 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-local opt = vim.opt
 
--- if not vim.uv.fs_stat(lazypath) then
-if vim.fn.isdirectory(lazypath) == 0 then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out,                            "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
 end
 
-opt.rtp:prepend(lazypath)
+vim.opt.rtp:prepend(lazypath)
 
-local status_ok, lazy = pcall(require, "lazy")
-if not status_ok then
-    vim.notify("Lazy.nvim is not ready")
-    return
-end
-
-lazy.setup({
+require('lazy').setup({
     ui = {
         border = "rounded",
         icons = {
@@ -40,25 +36,12 @@ lazy.setup({
             lazy = "💤 ",
         },
     },
-    performance = {
-        cache = {
-            enabled = true,
-        },
-        reset_packpath = true,                                                  -- reset the package path to improve startup time
-        rtp = {
-            reset = false,                                                      -- reset the runtime path to $VIMRUNTIME and your config directory
-            paths = { '/opt/homebrew/Cellar/neovim/0.11.5_1/share/nvim/runtime' }, -- add any custom paths here that you want to includes in the rtp
-            disabled_plugins = {
-                -- "gzip",
-                -- "matchit",
-                -- "matchparen",
-                -- "netrwPlugin",
-                -- "tarPlugin",
-                -- "tohtml",
-                -- "tutor",
-                -- "zipPlugin",
-            },
-        },
+    spec = {
+        { import = "plugins" },
+        { import = "plugins.ui" },
+        { import = "plugins.editor" },
+        { import = "plugins.ai" },
+        { import = "plugins.tools" },
+
     },
-    spec = { import = "plugins" },
 })

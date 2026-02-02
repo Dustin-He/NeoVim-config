@@ -20,14 +20,14 @@ end
 local function registerOP(func, linewise, changable)
     if linewise then
         return function()
-            require("core.operator").__opfunc = CreateOperatorFunc(func, changable)
-            vim.go.operatorfunc = "v:lua.require'core.operator'.__opfunc"
+            require("utils.operator").__opfunc = CreateOperatorFunc(func, changable)
+            vim.go.operatorfunc = "v:lua.require'utils.operator'.__opfunc"
             saveMarkOP()
         end
     else
         return function()
-            require("core.operator").__opfunc = CreateOperatorFunc(func, changable)
-            vim.go.operatorfunc = "v:lua.require'core.operator'.__opfunc"
+            require("utils.operator").__opfunc = CreateOperatorFunc(func, changable)
+            vim.go.operatorfunc = "v:lua.require'utils.operator'.__opfunc"
             return "g@"
         end
     end

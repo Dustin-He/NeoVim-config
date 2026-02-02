@@ -10,7 +10,6 @@ local keymap = vim.api.nvim_set_keymap
 -- Escape
 keymap("i", "jk", "<ESC>", opts)
 
-
 -- Visual Mode --
 -- Move multiple lines
 keymap("v", "<leader>j", ":m '>+1<CR>gv", opts)
@@ -55,16 +54,6 @@ keymap("n", "H", "10h", opts)
 keymap("n", "L", "10l", opts)
 keymap("n", "W", "5w", opts)
 keymap("n", "B", "5b", opts)
--- Nvim-tree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
--- Bufferline
-keymap("n", "<leader><tab>", ":BufDel<CR>", opts)
-keymap("n", "<leader>b", ":BufferLinePick<CR>", opts)
-keymap("n", "<leader>B", ":BufferLinePickClose<CR>", opts)
--- ToggleTerm
-keymap("n", "<leader>t", ":ToggleTerm direction=float<CR>", opts)
--- LazyGit
-keymap("n", "<leader>g", ":LazyGit<CR>", opts)
 
 -- Open URL
 local function open_external(file)
@@ -91,8 +80,3 @@ end
 vim.keymap.set("n", "gx", function()
     open_external(vim.fn.expand("<cfile>"))
 end)
-
--- CodeCompanion
-vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-vim.keymap.set({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
-vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })

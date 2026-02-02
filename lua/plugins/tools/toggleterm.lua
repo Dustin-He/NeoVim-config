@@ -3,6 +3,11 @@ local toggleterm = {{
     version = "*",
     lazy = true,
     cond = (function() return not vim.g.vscode end),
+    init = function()
+        local opts = { noremap = true, silent = true }
+        vim.api.nvim_set_keymap("n", "<leader>t", ":ToggleTerm direction=float<CR>", opts)
+
+    end,
     opts = {
         open_mapping = [[<c-\>]],
         -- insert_mapping = true, -- normal mapping does not work if true

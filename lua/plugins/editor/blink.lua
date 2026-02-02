@@ -15,6 +15,23 @@ local blink = {
     -- If you use nix, you can build from source using latest nightly rust with:
     -- build = 'nix run .#build-plugin',
 
+    init = function()
+        vim.api.nvim_create_autocmd('User', {
+            pattern = 'BlinkCmpMenuOpen',
+            callback = function()
+                require("copilot.suggestion").dismiss()
+                vim.b.copilot_suggestion_hidden = true
+            end,
+        })
+
+        vim.api.nvim_create_autocmd('User', {
+            pattern = 'BlinkCmpMenuClose',
+            callback = function()
+                vim.b.copilot_suggestion_hidden = false
+            end,
+        })
+    end,
+
     ---@module 'blink.cmp'
     ---@diagnostic disable-next-line
     ---@type blink.cmp.Config

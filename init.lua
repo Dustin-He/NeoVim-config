@@ -1,6 +1,7 @@
 require("core.options")
 require("core.keymaps")
-require("core.presettings")
-require("core.search")
-require("core.surround")
-require("core.operator")
+require("core.autocmd")
+require("core.lazy")
+require("utils.search")
+require("utils.surround")
+

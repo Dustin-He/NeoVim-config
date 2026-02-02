@@ -49,6 +49,12 @@ local ufo = {
         }
     },
     init = function()
+        vim.opt.foldlevel = 99
+        vim.opt.foldlevelstart = 99
+        vim.opt.foldcolumn = "1"
+        vim.o.foldenable = true
+        vim.opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+
         -- Global keymaps for convenience
         vim.keymap.set("n", "zR", function() require("ufo").openAllFolds() end, { desc = "Open all folds" })
         vim.keymap.set("n", "zM", function() require("ufo").closeAllFolds() end, { desc = "Close all folds" })
@@ -63,4 +69,5 @@ local ufo = {
         end)
     end,
 }
+
 return ufo

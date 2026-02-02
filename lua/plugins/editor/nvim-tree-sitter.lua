@@ -5,7 +5,7 @@ local nvimtreesitter = { {
     -- version = "*",
     lazy = false,
     config = function()
-        require("nvim-treesitter.config").setup({
+        require("nvim-treesitter").setup({
             ensure_installed = { "regex",
                 "markdown_inline",
                 "json",

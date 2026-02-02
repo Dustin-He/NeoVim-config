@@ -3,30 +3,21 @@ local bufferline = { {
     lazy = false,
     dependencies = { 'catppuccin', 'nvim-tree/nvim-web-devicons' },
     cond = (function() return not vim.g.vscode end),
-    -- version = "*",
-    -- ft = "alpha",
+    version = "*",
     event = "VeryLazy",
     init = function()
         vim.api.nvim_create_autocmd("User", {
             pattern = "LazyDone",
             callback = function()
-                -- local backgorund = require("catppuccin.palettes.mocha").base
-                local backgorund = require("catppuccin.palettes.macchiato").base
                 vim.cmd [[
-                        " highlight BufferLineFill guibg=#1F2329  " Theme specific
                         highlight BufferLineFill guibg=backgorund
-                        " highlight BufferLineBackground guibg=backgorund
-                        " highlight BufferLineBuffer guibg=backgorund
-                        " highlight BufferLineBufferVisible guibg=backgorund
-                        " highlight BufferLineBufferSelected guibg=backgorund
-                        " highlight BufferLineSeperatorSelected guibg=backgorund
-                        " highlight BufferLineSeperatorVisible guibg=backgorund
-                        " highlight BufferLineSeperator guibg=backgorund
-                        " highlight BufferLineTabSeperator guibg=backgorund
-                        " highlight BufferLineTab guibg=backgorund
                 ]]
             end,
         })
+        local opts = { noremap = true, silent = true }
+        vim.api.nvim_set_keymap("n", "<leader><tab>", ":BufDel<CR>", opts)
+        vim.api.nvim_set_keymap("n", "<leader>b", ":BufferLinePick<CR>", opts)
+        vim.api.nvim_set_keymap("n", "<leader>B", ":BufferLinePickClose<CR>", opts)
     end,
     config = function()
         require("bufferline").setup({
@@ -34,10 +25,6 @@ local bufferline = { {
                 mode = 'buffers',
                 diagnostics = "nvim_lsp",
                 themable = true,
-                -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                --     local icon = level:match("error") and " " or " "
-                --     return " " .. icon .. count
-                -- end,
                 diagnostics_indicator = function(count, level, diagnostics_dict, context)
                     local s = ""
                     for e, n in pairs(diagnostics_dict) do
@@ -71,7 +58,6 @@ local bufferline = { {
                 show_buffer_close_icons = true,
                 close_command = "BufDel %d", -- can be a string | function, | false see "Mouse actions"
             },
-            -- highlights = require("catppuccin.groups.integrations.bufferline").get_theme()
             highlights = require("catppuccin.special.bufferline").get_theme()
 
         })

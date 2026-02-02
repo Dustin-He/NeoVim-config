@@ -23,24 +23,24 @@ local function addSurround(l, r)
     end
 end
 
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>sb", addSurround('(', ')'), true, true, "Add brackets")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s(", addSurround('(', ')'), true, true, "Add brackets")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s)", addSurround('(', ')'), true, true, "Add brackets")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>sB", addSurround('{', '}'), true, true,
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>sb", addSurround('(', ')'), true, true, "Add brackets")
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s(", addSurround('(', ')'), true, true, "Add brackets")
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s)", addSurround('(', ')'), true, true, "Add brackets")
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>sB", addSurround('{', '}'), true, true,
     "Add curly brackets")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s{", addSurround('{', '}'), true, true,
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s{", addSurround('{', '}'), true, true,
     "Add curly brackets")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s}", addSurround('{', '}'), true, true,
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s}", addSurround('{', '}'), true, true,
     "Add curly brackets")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s[", addSurround('[', ']'), true, true, "Add []")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s]", addSurround('[', ']'), true, true, "Add []")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s<", addSurround('<', '>'), true, true, "Add <>")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s>", addSurround('<', '>'), true, true, "Add <>")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s\"", addSurround('"', '"'), true, true,
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s[", addSurround('[', ']'), true, true, "Add []")
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s]", addSurround('[', ']'), true, true, "Add []")
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s<", addSurround('<', '>'), true, true, "Add <>")
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s>", addSurround('<', '>'), true, true, "Add <>")
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s\"", addSurround('"', '"'), true, true,
     "Add double quotes")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s'", addSurround('\'', '\''), true, true,
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s'", addSurround('\'', '\''), true, true,
     "Add single quotes")
-require("core.operator").CreateOperators({ "n", "v" }, "<leader>s`", addSurround('`', '`'), true, true, "Add `")
+require("utils.operator").CreateOperators({ "n", "v" }, "<leader>s`", addSurround('`', '`'), true, true, "Add `")
 
 -- get the surround characters
 local function getSurround()

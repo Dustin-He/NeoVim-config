@@ -1,29 +1,79 @@
 local nvim_lspconfig = {
-    -- {
-    --     "folke/neodev.nvim",
-    -- },
     {
         "neovim/nvim-lspconfig",
+        dependencies = {
+            "williamboman/mason.nvim",
+            'williamboman/mason-lspconfig.nvim',
+            "saghen/blink.cmp",
+            {
+                "folke/lazydev.nvim",
+                ft = "lua", -- only load on lua files
+                opts = {
+                    library = {
+                        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                    },
+                },
+            }
+        },
         lazy = false,
         cond = (function() return not vim.g.vscode end),
         config = function()
-            local servers_ok, servers = pcall(require, "plugins.lsp.servers")
-            -- require("neodev").setup({})
-            if servers_ok then
-                -- local cap_opts = { capabilities = vim.deepcopy(require('cmp_nvim_lsp').default_capabilities()) }
-                local cap_opts = { capabilities = vim.deepcopy(require('blink.cmp').get_lsp_capabilities()) }
-                for _, server in ipairs(servers.server_names) do
-                    local settings_ok, settings = pcall(require, "plugins.lsp.languages." .. server)
-                    if settings_ok then
-                        settings = vim.tbl_deep_extend("force", cap_opts, settings)
-                    else
-                        settings = vim.tbl_deep_extend("force", cap_opts, {})
-                    end
-                    vim.lsp.config(server, settings)
-                    -- vim.lsp.enable(server)
+            require("mason").setup({
+                ui = {
+                    icons = {
+                        package_installed = "✓",
+                        package_pending = "➜",
+                        package_uninstalled = "✗"
+                    }
+                }
+            })
+
+            local installed_servers = {
+                "clangd",
+                "cmake",
+                "gopls",
+                "texlab",
+                "html",
+                "jsonls",
+                "ts_ls",
+                "lua_ls",
+                "marksman",
+                "pyright",
+                "ruff",
+                "rust_analyzer",
+                "lemminx",
+                "yamlls",
+                "jdtls",
+                "jsonls",
+                "vimls",
+                "bashls",
+            }
+
+            require("mason-lspconfig").setup({
+                ensure_installed = installed_servers,
+            })
+
+            -- 2. 配置 Handlers (自动化逻辑)
+            local function handler(server_name)
+                local opts = {}
+
+                local module_name = "plugins.lsp.languages." .. server_name
+                local status, custom_opts = pcall(require, module_name)
+
+                if status then
+                    opts = custom_opts
                 end
-            else
-                print("No servers found\n")
+
+                -- 合并 capabilities
+                opts.capabilities = require('blink.cmp').get_lsp_capabilities(opts.capabilities)
+
+                -- 启动 Server
+                vim.lsp.config(server_name, opts)
+                -- vim.lsp.enable(server_name)
+            end
+
+            for _, server_name in ipairs(installed_servers) do
+                handler(server_name)
             end
 
             vim.diagnostic.config({
@@ -46,12 +96,7 @@ local nvim_lspconfig = {
                 },
             })
 
-            local keymaps_ok, keymaps = pcall(require, "plugins.lsp.keymaps")
-            if not keymaps_ok then
-                vim.notify("LSP keymaps not found\n", vim.log.levels.DEBUG)
-                return
-            end
-            keymaps.set_keymaps()
+            require('plugins.lsp.keymaps').set_keymaps()
         end
     } }
 

@@ -49,24 +49,23 @@ local myColorScheme = {
                     }
                 end,
                 integrations = {
-                    cmp = true,
                     gitsigns = true,
                     nvimtree = true,
                     treesitter = true,
-                    notify = false,
+                    notify = true,
                     blink_cmp = true,
-                    -- mini = {
-                    --     enabled = true,
-                    --     indentscope_color = "",
-                    -- },
+                    mini = {
+                        enabled = true,
+                        indentscope_color = "",
+                    },
                     -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
                     alpha = true,
                     flash = true,
                     mason = true,
                     noice = true,
                     telescope = { enabled = true },
-                    whichkey = false,
-                    ts_rainbow = true,
+                    ufo = true,
+                    rainbow_delimiters = true,
                 },
             })
             vim.cmd.colorscheme "catppuccin"
@@ -75,7 +74,6 @@ local myColorScheme = {
 
     {
         "folke/tokyonight.nvim",
-        -- version = "*",
         lazy = false, -- make sure we load this during startup if it is your main colorscheme
         -- priority = 998, -- make sure to load this before all the other start plugins
         config = function()
