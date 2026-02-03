@@ -1,9 +1,9 @@
 local telescope = { {
     'nvim-telescope/telescope.nvim',
-    tag = 'v0.2.0',
+    tag = 'v0.2.1',
     dependencies = { { 'nvim-lua/plenary.nvim' }, {'nvim-telescope/telescope-ui-select.nvim'}},
-    keys = { "<leader>ff", "<leader>fg", "<leader>fb", "<leader>fh" },
-    event = { "User AlphaReady" },
+    -- keys = { "<leader>ff", "<leader>fg", "<leader>fb", "<leader>fh" },
+    -- event = { "User AlphaReady" },
     cond = (function() return not vim.g.vscode end),
     config = function()
         local builtin = require('telescope.builtin')

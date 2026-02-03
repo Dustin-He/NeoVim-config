@@ -69,6 +69,7 @@ local nvim_lspconfig = {
 
                 -- 启动 Server
                 vim.lsp.config(server_name, opts)
+                -- Do not need this since mason-lspconfig enables all servers
                 -- vim.lsp.enable(server_name)
             end
 
