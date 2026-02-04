@@ -33,16 +33,16 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
-local augroup_comment = vim.api.nvim_create_augroup("comment_highlight_cmds", { clear = true })
--- vim.api.nvim_create_autocmd({ "BufNew", "VimEnter", "BufWinEnter", "BufRead", "FileReadPost" }, {
-vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "tex",
-    group = augroup_comment,
-    callback = function()
-        vim.api.nvim_set_hl(0, "Normal", { fg = '#CFF6FA' })
-    end
-    -- command = "highlight Normal guifg=#CFF6FA"
-})
+-- local augroup_comment = vim.api.nvim_create_augroup("comment_highlight_cmds", { clear = true })
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+--     pattern = "tex",
+--     group = augroup_comment,
+--     callback = function()
+--         vim.api.nvim_set_hl(0, "Normal", { fg = '#E7EAFF' })
+--         vim.api.nvim_set_hl(0, "Comment", { fg = "#6C7086", italic = true })
+--     end
+--     -- command = "highlight Normal guifg=#CFF6FA"
+-- })
 
 -- Restore cursor
 vim.cmd [[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]

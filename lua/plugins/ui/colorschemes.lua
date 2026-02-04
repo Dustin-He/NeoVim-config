@@ -39,10 +39,12 @@ local myColorScheme = {
                 color_overrides = {},
                 custom_highlights = function(colors)
                     return {
-                        -- Comment = { fg = colors.flamingo },
                         -- TabLineSel = { bg = colors.pink },
                         -- CmpBorder = { fg = colors.surface2 },
                         -- Pmenu = { bg = '#000000' },
+                        Normal = { fg = "#E7EAFF", bg = "NONE" },
+                        NormalNC = { fg = "#E7EAFF", bg = "NONE" },
+                        Comment = { fg = "#6C7086", italic = true },
                         BlinkCmpDoc = { fg = '#939AB7' },
                         BlinkCmpDocBorder = { fg = '#939AB7' },
                         Todo = { style = { 'nocombine' }, bg = colors.none, fg = colors.red },
