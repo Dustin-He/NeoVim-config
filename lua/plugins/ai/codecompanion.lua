@@ -12,9 +12,9 @@ local codecompanion = {
         "CodeCompanionCmd",
     },
     init = function ()
-        vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-        vim.keymap.set({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
-        vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+        vim.keymap.set({ "n", "v" }, "ga", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+        vim.keymap.set({ "n" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+        vim.keymap.set("v", "<Leader>a", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
     end,
     opts = {
         interactions = {
@@ -61,7 +61,7 @@ local codecompanion = {
                 }
             },
             action_palette = {
-                provider = 'snacks',
+                provider = 'telescope',
                 opts = {
                     show_prompt_library_builtins = true,
                 }
