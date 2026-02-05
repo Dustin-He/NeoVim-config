@@ -65,7 +65,7 @@ local myColorScheme = {
                     flash = true,
                     mason = true,
                     noice = true,
-                    telescope = { enabled = true },
+                    telescope = { enabled = false },
                     ufo = true,
                     rainbow_delimiters = true,
                 },
