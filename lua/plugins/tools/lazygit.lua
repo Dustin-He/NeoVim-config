@@ -4,6 +4,8 @@ local lazygit = {
     dependencies = {
         "nvim-lua/plenary.nvim",
     },
+    keys = { "<leader>g" },
+    cmd = { "LazyGit", "LazyGitLog", "LazyGitConfig", "LazyGitFilter", "LazyGitCurrentFile", "LazyGitFilterCurrentFile" },
     cond = (function() return not vim.g.vscode end),
     init = function()
         vim.g.lazygit_floating_window_winblend = 0 -- transparency of floating window

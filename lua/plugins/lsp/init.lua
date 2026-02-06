@@ -15,7 +15,7 @@ local nvim_lspconfig = {
                 },
             }
         },
-        lazy = false,
+        event = { "BufReadPre", "BufNewFile" },
         cond = (function() return not vim.g.vscode end),
         config = function()
             require("mason").setup({

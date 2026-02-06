@@ -7,6 +7,7 @@ local blink = {
         { 'L3MON4D3/LuaSnip',            version = 'v2.*' },
         { 'milanglacier/minuet-ai.nvim' }
     },
+    event = {"InsertEnter", "CmdlineEnter"},
 
     -- use a release tag to download pre-built binaries
     version = '1.*',
