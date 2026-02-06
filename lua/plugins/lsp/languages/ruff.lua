@@ -10,8 +10,8 @@ return {
     init_options = {
         settings = {
             lint = {
-                -- enable = false,
-                ignore = { "F401" }
+                enable = false,
+                -- ignore = { "F401" }
             },
         },
     }
