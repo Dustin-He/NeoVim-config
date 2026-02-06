@@ -2,7 +2,7 @@ local vimtex = {{
     "lervag/vimtex",
     -- version="*",
     -- lazy = true,
-    -- ft = {"tex", "bib"},
+    ft = {"tex", "bib"},
     cond = (function() return not vim.g.vscode end),
     init = function ()
         vim.cmd([[
