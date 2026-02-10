@@ -138,7 +138,7 @@ return {
                     macro,
                     '%S',
                     'selectioncount',
-                    -- 直接使用我们上面定义的函数，而不是 { require(...) } 这种容易出错的写法
+                    require("remote").lualine_component,
                     minuet_component,
                     'copilot',
                     'encoding',

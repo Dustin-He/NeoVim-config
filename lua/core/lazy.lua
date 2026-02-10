@@ -42,6 +42,19 @@ require('lazy').setup({
         { import = "plugins.editor" },
         { import = "plugins.ai" },
         { import = "plugins.tools" },
-
+        {
+            dir = vim.fn.stdpath("config") .. "/custom",
+            name = "remote-local",
+            priority = 1000,
+            keys = { "<leader>rc" },
+            config = function()
+                require("remote").setup({
+                    lsp = {
+                        library_path_patterns = { "/site%-packages/", "/dist%-packages/" },
+                        disable_diagnostics_on_library = true,
+                    },
+                })
+            end,
+        },
     },
 })
