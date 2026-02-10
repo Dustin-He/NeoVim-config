@@ -15,7 +15,23 @@ local bufferline = { {
             end,
         })
         local opts = { noremap = true, silent = true }
-        vim.api.nvim_set_keymap("n", "<leader><tab>", ":BufDel<CR>", opts)
+        -- vim.api.nvim_set_keymap("n", "<leader><tab>", ":BufDel<CR>", opts)
+        vim.keymap.set("n", "<leader><tab>", function()
+            local has_safe = vim.fn.exists(":RemoteSafeBdelete") == 2
+            if has_safe then
+                vim.cmd("RemoteSafeBdelete")
+                return
+            end
+
+            local has_bufdel = vim.fn.exists(":BufDel") == 2
+            if has_bufdel then
+                vim.cmd("BufDel")
+                return
+            end
+
+            vim.cmd("bdelete")
+        end, { noremap = true, silent = true })
+
         vim.api.nvim_set_keymap("n", "<leader>b", ":BufferLinePick<CR>", opts)
         vim.api.nvim_set_keymap("n", "<leader>B", ":BufferLinePickClose<CR>", opts)
     end,
