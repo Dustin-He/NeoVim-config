@@ -20,21 +20,21 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
     ui = {
         border = "rounded",
-        icons = {
-            cmd = "⌘",
-            config = "🛠",
-            event = "📅",
-            ft = "📂",
-            init = "⚙",
-            keys = "🗝",
-            plugin = "🔌",
-            runtime = "💻",
-            require = "🌙",
-            source = "📄",
-            start = "🚀",
-            task = "📌",
-            lazy = "💤 ",
-        },
+        -- icons = {
+        --     cmd = "⌘",
+        --     config = "🛠",
+        --     event = "📅",
+        --     ft = "📂",
+        --     init = "⚙",
+        --     keys = "🗝",
+        --     plugin = "🔌",
+        --     runtime = "💻",
+        --     require = "🌙",
+        --     source = "📄",
+        --     start = "🚀",
+        --     task = "📌",
+        --     lazy = "💤 ",
+        -- },
     },
     spec = {
         { import = "plugins" },
@@ -56,5 +56,22 @@ require('lazy').setup({
                 })
             end,
         },
+        {
+            dir = "/Users/dustin/.config/nvim/custom/lua/colorscheme",
+            name = "nebula_ember",
+            enabled = false,
+            -- lazy = false,
+            -- priority = 1000,
+            config = function()
+                require("colorscheme").setup({
+                    transparent = true,
+                    terminal_colors = true,
+                    glow = true,
+                    glow_strength = "medium"
+                })
+                -- vim.cmd.colorscheme("nebula_ember")
+            end,
+        }
+
     },
 })

@@ -1,8 +1,8 @@
 local vimtex = {{
     "lervag/vimtex",
     -- version="*",
-    -- lazy = true,
-    ft = {"tex", "bib"},
+    lazy = false,
+    -- ft = {"tex", "bib"},
     cond = (function() return not vim.g.vscode end),
     init = function ()
         vim.cmd([[
@@ -14,21 +14,24 @@ local vimtex = {{
             let g:vimtex_view_skim_sync = 1
             let g:vimtex_view_skim_activate = 1
             let g:vimtex_view_automatic = 1
-            let g:vimtex_compiler_latexmk = {'continuous' : 0}
             let g:vimtex_complete_enabled = 0
             let g:vimtex_syntax_enabled = 0
             let g:vimtex_compiler_latexmk_engines = {
-                \'_'    : '-pdflatex',
+                \'_'    : '-xelatex',
+            \}
+            let g:vimtex_compiler_latexmk = {
+                \'out_dir' : 'build',
+                \'continuous' : 0,
             \}
 
-            function ViewClean()
-                VimtexView
-                VimtexClean
-            endfunction
-            augroup vimtex_cmds
-                autocmd!
-                autocmd User VimtexEventCompileSuccess call ViewClean()
-            augroup END
+            " function ViewClean()
+            "     VimtexView
+            "     VimtexClean
+            " endfunction
+            " augroup vimtex_cmds
+            "     autocmd!
+            "     autocmd User VimtexEventCompileSuccess call ViewClean()
+            " augroup END
         ]])
     end
 }}
